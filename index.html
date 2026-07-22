@@ -20,7 +20,7 @@
 
     .website-container {
       width: 100%;
-      max-width: 850px;
+      max-width: 900px; /* Made slightly wider to fit the PDF nicely */
     }
 
     .tab-bar {
@@ -216,7 +216,7 @@
 
     /* Solution Pages Formatting */
     .solution-page {
-      display: none; /* Hidden by default */
+      display: none; 
     }
 
     .solution-page.active {
@@ -349,140 +349,21 @@
         <button class="back-btn" onclick="showSection('integral-module')">← Back to Search & Tags</button>
         
         <div id="solution-1" class="solution-page">
-          <h2>Problem 1</h2>
-          <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
-            \[ \int x^x \, dx \]
-          </div>
-          <p>\noindent
-Different integrals for $x^x$ (First four are in order of Desmos computational speed and accuracy for low number of terms). First two were found from working out, third was using a known derivation of the integral using the method of exhaustion, and fourth was using the definition of the integral using Riemann summation.
-
-\[\int x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{-x^n\ln^k x}{(-n)^{n-k}k!}+C\]
-
-\[\int x^x\,dx=\sum_{n=1}^{\infty}\Bigg(\sum_{k=0}^{\infty}\frac{n^{k+1}(\ln{x})^{n+k}}{k!n!(n+k)}-(-n)^{-n}\Bigg)+C\]
-
-\[\int x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=1}^{2^n-1}\frac{x(2^{-n}kx)^{2^{-n}kx}
-}{(-1)^{k+1}2^n}+C\]
-
-\[\int x^x\,dx=\lim_{n\to\infty}\frac{x}{n}\sum_{k=1}^{n}\Big(\frac{xk}{n}\Big)^{\frac{xk}{n}}+C\]
-\\
-\[\int_{1}^{b}x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{\infty}\frac{n^{k+1}(\ln{b})^{n+k}}{k!n!(n+k)}\]
-
-\[\therefore\int_{1}^{e}x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{\infty}\frac{n^{k+1}}{k!n!(n+k)}\]
-\\
-\[\int_{0}^{1} x^x\,dx=-\sum_{n=1}^{\infty}(-n)^{-n}\]
-
-\[\int_{0}^{1} x^{-x}\,dx=\sum_{n=1}^{\infty}n^{-n}\]
-
-\newpage
-
-\noindent
-My derivation for the best series expression of 
-
-\[\int x^x\,dx\]
-
-\[=\int_{0}^{x} t^t\,dt\]
-
-\[=\int_{0}^{x} e^{t\ln t}\,dt\]
-
-\noindent
-Using the Maclaurin series for $e^x$,
-
-\[=\int_{0}^{x} \sum_{n=0}^{\infty}\frac{(t\ln t)^n}{n!}\,dt\]
-
-\[=\sum_{n=0}^{\infty}\frac{1}{n!}\int_{0}^{x}(t\ln t)^n\,dt\]
-
-\[t=e^{\frac{-u}{n+1}},dt=\frac{-e^{\frac{-u}{n+1}}}{n+1}\,du\]
-
-\[\therefore\sum_{n=0}^{\infty}\frac{1}{n!}\int_{0}^{x}(t\ln t)^n\,dt=\sum_{n=0}^{\infty}\frac{1}{n!}\int_{\infty}^{-(n+1)\ln x}\Big(e^{\frac{-u}{n+1}}\Big)^{n+1}\bigg(\frac{-u}{n+1}\bigg)^n\bigg(\frac{-1}{n+1}\bigg)du\]
-
-\[=\sum_{n=0}^{\infty}\frac{(-1)^n}{n!(n+1)^{n+1}}\int_{-(n+1)\ln x}^{\infty}e^{-u}u^n\,du\]
-
-\[=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{(n-1)!n^{n}}\int_{-n\ln x}^{\infty}e^{-u}u^{n-1}\,du\]
-\noindent
-For readability purposes, let $-n\ln x=a$. For now, just consider the integral above.
-
-\[\int_{a}^{\infty}e^{-u}u^{n-1}\,du\]
-
-\[\textrm{IBP with }u=u^{n-1},dv=e^{-u}\]
-
-\[=e^{-a}a^{n-1}+(n-1)\int_{a}^{\infty}e^{-u}u^{n-2}\,du\]
-
-\[\textrm{Using IBP again for second time:}\]
-\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+(n-1)(n-2)\int_{a}^{\infty}e^{-u}u^{n-3}\,du\]
-
-\[\textrm{Using IBP again for third time:}\]
-\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+e^{-a}a^{n-3}(n-1)(n-2)+(n-1)(n-2)(n-3)\int_{a}^{\infty}e^{-u}u^{n-4}\,du\]
-
-\noindent
-Thus, after performing IBP a total of $n-1$ times, we get
-\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+\cdots+e^{-a}a^{2}\frac{(n-1)!}{2}+e^{-a}a(n-1)!+(n-1)!\int_{a}^{\infty}e^{-u}\,du\]
-\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+\cdots+e^{-a}a^{2}\frac{(n-1)!}{2}+e^{-a}a(n-1)!+e^{-a}(n-1)!\]
-
-\noindent Re-arranging back to front, and rewriting:
-\[=e^{-a}(n-1)!+e^{-a}a(n-1)!+e^{-a}a^2\frac{(n-1)!}{2}+\cdots+e^{-a}a^{n-2}\frac{(n-1)!}{(n-2)!}+e^{-a}a^{n-1}\]
-
-\[=\frac{e^{-a}(n-1)!}{0!}+\frac{e^{-a}a(n-1)!}{1!}+\frac{e^{-a}a^2(n-1)!}{2!}+\cdots+\frac{e^{-a}a^{n-2}(n-1)!}{(n-2)!}+\frac{e^{-a}a^{n-1}(n-1)!}{(n-1)!}\]
-
-\[=e^{-a}(n-1)!\bigg(\frac{a^0}{0!}+\frac{a^1}{1!}+\frac{a^2}{2!}+\cdots+\frac{a^{n-2}}{(n-2)!}+\frac{a^{n-1}}{(n-1)!}\bigg)\]
-
-\[=e^{-a}(n-1)!\sum_{k=0}^{n-1}\frac{a^k}{k!}\]
-
-\noindent
-This sum is also known as the incomplete gamma function. As $a_1=-n\ln x$,
-
-\[e^{-a}(n-1)!\sum_{k=0}^{n-1}\frac{a^k}{k!}=e^{n\ln x}(n-1)!\sum_{k=0}^{n-1}\frac{(-n\ln x)^k}{k!}\]
-
-\[=x^n(n-1)!\sum_{k=0}^{n-1}\frac{(-n\ln x)^k}{k!}\]
-
-\noindent
-Using this result,
-
-\[\therefore\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{(n-1)!n^{n}}\int_{-n\ln x}^{\infty}e^{-u}u^{n-1}\,du=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n(n-1)!}{(n-1)!n^{n}}\sum_{k=0}^{n-1}\frac{(-n\ln x)^k}{k!}\]
-
-\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-1)^{n-1}x^n(-n\ln x)^k}{n^{n}k!}\]
-
-\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-1)^{n+k-1}x^n n^k\ln^k x}{n^{n}k!}\]
-
-\noindent
-For all values of $n$ and $k$, $(-1)^{n+k-1}=(-1)^{k-n-1}$
-
-\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-1)^{k-n-1}x^n\ln^k x}{n^{n-k}k!}\]
-
-\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{-x^n\ln^k x}{(-n)^{n-k}k!}\]
-
-\noindent
-Thus arriving at our solution.
-
-\[\therefore\int x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{-x^n\ln^k x}{(-n)^{n-k}k!}+C\]
-\\
-\\
-\noindent
-Similarly, we can also get
-\[\int x^{-x}\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-x)^n\ln^k x}{(-n)^{n-k}k!}+C\]
-\\
-\\
-\noindent
-Together, these results allow us to obtain the Sophomore integrals
-
-\[\int_{0}^{1}x^x\,dx=-\sum_{n=1}^{\infty}(-n)^{-n}\]
-
-\[\int_{0}^{1}x^{-x}\,dx=\sum_{n=1}^{\infty}n^{-n}\]</p>
+          <h2>Problem 1: \( \int x^x \, dx \)</h2>
+          <p>Solution begins on page 16.</p>
+          <iframe src="My_Integral_Compilation.pdf#page=16" width="100%" height="800px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
         </div>
 
         <div id="solution-2" class="solution-page">
-          <h2>Problem 2</h2>
-          <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
-            \[ \int \sin(x) \cos(x) \, dx \]
-          </div>
-          <p>Paste your LaTeX solution for problem 2 here.</p>
+          <h2>Problem 2: \( \int \sin(x) \cos(x) \, dx \)</h2>
+          <p>Solution begins on page 19.</p>
+          <iframe src="My_Integral_Compilation.pdf#page=19" width="100%" height="800px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
         </div>
 
         <div id="solution-3" class="solution-page">
-          <h2>Problem 3</h2>
-          <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
-            \[ \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \]
-          </div>
-          <p>Paste your LaTeX solution for problem 3 here.</p>
+          <h2>Problem 3: \( \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \)</h2>
+          <p>Solution begins on page 25.</p>
+          <iframe src="My_Integral_Compilation.pdf#page=25" width="100%" height="800px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
         </div>
 
       </div>
@@ -493,7 +374,6 @@ Together, these results allow us to obtain the Sophomore integrals
   <script>
     let activeFilterTag = 'all';
 
-    // 1. Tab Switching Function
     function openTab(evt, tabName) {
       document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
@@ -502,62 +382,40 @@ Together, these results allow us to obtain the Sophomore integrals
       if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
     }
 
-    // 2. Simple Section Viewer (Hides everything else in the paper, shows target)
     function showSection(sectionId) {
       document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
       
-      // If we go back to the integral-module, tell MathJax to re-check for math just in case
       if(sectionId === 'integral-module') {
         MathJax.typesetPromise();
       }
     }
 
-    // 3. Open a Specific Solution Page
     function openSolutionPage(solutionId) {
-      // Show the solution viewer container
       showSection('solution-viewer');
-      
-      // Hide all individual solution pages
       document.querySelectorAll('.solution-page').forEach(page => page.classList.remove('active'));
-      
-      // Show only the clicked problem's page
       document.getElementById(solutionId).classList.add('active');
-      
-      // Render any math on the newly opened page
       MathJax.typesetPromise();
     }
 
-    // 4. Set the Active Tag from buttons
     function setTag(tag, button) {
-      // Visually highlight the clicked button
       document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
-      
-      // Update global active tag state
       activeFilterTag = tag;
-      
-      // Run the combined filter function
       applyFilters();
     }
 
-    // 5. Combined Filter (Search Bar + Tags)
     function applyFilters() {
       const searchQuery = document.getElementById('search-input').value.toLowerCase();
       const problemBars = document.querySelectorAll('.integral-bar');
 
       problemBars.forEach(bar => {
         const barTags = bar.getAttribute('data-tags');
-        // Extract plain text from the title div to search against
         const titleText = bar.querySelector('.integral-title').textContent.toLowerCase();
         
-        // Check if it matches the Tag
         const matchesTag = (activeFilterTag === 'all' || barTags.includes(activeFilterTag));
-        
-        // Check if it matches the Search Bar
         const matchesSearch = titleText.includes(searchQuery);
 
-        // If it passes BOTH filters, show it. Otherwise, hide it.
         if (matchesTag && matchesSearch) {
           bar.style.display = 'flex';
         } else {
