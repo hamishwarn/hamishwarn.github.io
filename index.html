@@ -20,7 +20,7 @@
 
     .website-container {
       width: 100%;
-      max-width: 900px; /* Made slightly wider to fit the PDF nicely */
+      max-width: 850px; 
     }
 
     .tab-bar {
@@ -213,15 +213,6 @@
       text-decoration: underline;
       font-weight: bold;
     }
-
-    /* Solution Pages Formatting */
-    .solution-page {
-      display: none; 
-    }
-
-    .solution-page.active {
-      display: block;
-    }
   </style>
 </head>
 <body>
@@ -312,7 +303,7 @@
 
         <div id="problems-list">
           
-          <div class="integral-bar" data-tags="parts jan26" onclick="openSolutionPage('solution-1')">
+          <div class="integral-bar" data-tags="parts jan26" onclick="window.open('My_Integral_Compilation.pdf#page=16', '_blank')">
             <div class="integral-title">
               \[ \int x^x \, dx \]
             </div>
@@ -322,7 +313,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="usub feb26" onclick="openSolutionPage('solution-2')">
+          <div class="integral-bar" data-tags="usub feb26" onclick="window.open('My_Integral_Compilation.pdf#page=19', '_blank')">
             <div class="integral-title">
               \[ \int \sin(x) \cos(x) \, dx \]
             </div>
@@ -332,7 +323,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="kings apr26" onclick="openSolutionPage('solution-3')">
+          <div class="integral-bar" data-tags="kings apr26" onclick="window.open('My_Integral_Compilation.pdf#page=25', '_blank')">
             <div class="integral-title">
               \[ \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \]
             </div>
@@ -343,29 +334,6 @@
           </div>
 
         </div>
-      </div>
-
-      <div id="solution-viewer" class="content-section">
-        <button class="back-btn" onclick="showSection('integral-module')">← Back to Search & Tags</button>
-        
-        <div id="solution-1" class="solution-page">
-          <h2>Problem 1: \( \int x^x \, dx \)</h2>
-          <p>Solution begins on page 16.</p>
-          <iframe src="My_Integral_Compilation.pdf#page=16" width="100%" height="800px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
-        </div>
-
-        <div id="solution-2" class="solution-page">
-          <h2>Problem 2: \( \int \sin(x) \cos(x) \, dx \)</h2>
-          <p>Solution begins on page 19.</p>
-          <iframe src="My_Integral_Compilation.pdf#page=19" width="100%" height="800px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
-        </div>
-
-        <div id="solution-3" class="solution-page">
-          <h2>Problem 3: \( \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \)</h2>
-          <p>Solution begins on page 25.</p>
-          <iframe src="My_Integral_Compilation.pdf#page=25" width="100%" height="800px" style="border: 1px solid #ccc; border-radius: 6px;"></iframe>
-        </div>
-
       </div>
 
     </div>
@@ -389,13 +357,6 @@
       if(sectionId === 'integral-module') {
         MathJax.typesetPromise();
       }
-    }
-
-    function openSolutionPage(solutionId) {
-      showSection('solution-viewer');
-      document.querySelectorAll('.solution-page').forEach(page => page.classList.remove('active'));
-      document.getElementById(solutionId).classList.add('active');
-      MathJax.typesetPromise();
     }
 
     function setTag(tag, button) {
