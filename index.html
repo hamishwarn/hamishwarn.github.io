@@ -9,7 +9,6 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    /* Dark background for the whole screen */
     body {
       background-color: #121212;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,10 +20,9 @@
 
     .website-container {
       width: 100%;
-      max-width: 800px;
+      max-width: 850px;
     }
 
-    /* Dark Tab Buttons */
     .tab-bar {
       display: flex;
       gap: 5px;
@@ -55,14 +53,13 @@
       border-color: #ffffff;
     }
 
-    /* The "Word Document" Page in the Middle */
     .paper-page {
       background-color: #ffffff;
       color: #222222;
       padding: 40px 50px;
       border-radius: 0 8px 8px 8px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
-      min-height: 500px;
+      min-height: 600px;
     }
 
     .content-section {
@@ -79,7 +76,6 @@
       margin-top: 0;
     }
 
-    /* Project Cards */
     .project-card {
       background-color: #f8f9fa;
       border: 1px solid #e0e0e0;
@@ -96,7 +92,41 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    /* Tag Filtering Section */
+    /* Filters, Search, and PDF Links */
+    .tools-container {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+    }
+
+    .pdf-link {
+      display: inline-block;
+      background-color: #252525;
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    
+    .pdf-link:hover {
+      background-color: #444444;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      font-family: monospace;
+    }
+
     .filter-group {
       margin-bottom: 15px;
     }
@@ -116,17 +146,17 @@
     }
 
     .tag-btn {
-      background-color: #f0f0f0;
+      background-color: #e0e0e0;
       border: 1px solid #ccc;
       border-radius: 20px;
-      padding: 5px 14px;
+      padding: 6px 14px;
       font-size: 13px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
     .tag-btn:hover {
-      background-color: #e0e0e0;
+      background-color: #d0d0d0;
     }
 
     .tag-btn.active {
@@ -177,16 +207,27 @@
       border: none;
       color: #0066cc;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
       padding: 0;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-decoration: underline;
+      font-weight: bold;
+    }
+
+    /* Solution Pages Formatting */
+    .solution-page {
+      display: none; /* Hidden by default */
+    }
+
+    .solution-page.active {
+      display: block;
     }
   </style>
 </head>
 <body>
 
   <div class="website-container">
+    
     <div class="tab-bar">
       <button class="tab-button active" onclick="openTab(event, 'about')">About Me</button>
       <button class="tab-button" onclick="openTab(event, 'projects')">Projects</button>
@@ -197,113 +238,140 @@
       <div id="about" class="content-section active">
         <h1>About Me</h1>
         <p>Hello! Welcome to my personal website.</p>
-        <p>I'm Hamish! I am 20 years old and currently pursuing a Bachelor of Mathematical Sciences (Advanced) at Adelaide University. 
-          I am an avid enjoyer of everything mathematics related, and over the last year or so I have been 
-          working on a large solution compilation of difficult integrals/sums/products. The purpose of this website is primarily to showcase
-         this compilation. Please see 'My Projects' to check it out for yourself!</p>
       </div>
 
       <div id="projects" class="content-section">
         <h1>My Projects</h1>
-        
-        <div class="project-card" onclick="showIntegralModule()">
+        <div class="project-card" onclick="showSection('integral-module')">
           <h2 style="margin: 0 0 8px 0; color: #111;">Integral Compilation</h2>
           <p style="margin: 0; color: #555;">A searchable collection of solved integrals organized by solution methods and completion dates.</p>
         </div>
-
       </div>
 
       <div id="integral-module" class="content-section">
         <button class="back-btn" onclick="openTab(event, 'projects')">← Back to Projects</button>
         <h1>Integral Compilation</h1>
         
-        <div style="background-color: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+        <div class="tools-container">
           
+          <a href="My_Integral_Compilation.pdf" target="_blank" class="pdf-link">
+            📄 Open Original Full PDF Compilation
+          </a>
+
+          <input type="text" id="search-input" class="search-bar" placeholder="Search keywords in title (e.g., \sin or x^x)..." onkeyup="applyFilters()">
+
           <div class="filter-group">
             <span class="filter-label">Filter by Method:</span>
             <div class="tag-container">
-              <button class="tag-btn active" onclick="filterIntegrals('all', this)">All</button>
-              <button class="tag-btn" onclick="filterIntegrals('parts', this)">Integration by Parts</button>
-              <button class="tag-btn" onclick="filterIntegrals('usub', this)">U-Substitution</button>
-              <button class="tag-btn" onclick="filterIntegrals('partialfracs', this)">Partial Fractions</button>
-              <button class="tag-btn" onclick="filterIntegrals('DUIS', this)">DUIS</button>
-              <button class="tag-btn" onclick="filterIntegrals('seriesstd', this)">Standard series expansion</button>
-              <button class="tag-btn" onclick="filterIntegrals('seriesfancy', this)">Fancy series expansion</button>
-              <button class="tag-btn" onclick="filterIntegrals('product', this)">Product Expansion</button>
-              <button class="tag-btn" onclick="filterIntegrals('piece', this)">Floor/Ceiling/Frac</button>
-              <button class="tag-btn" onclick="filterIntegrals('kings', this)">King's rule</button>
-              <button class="tag-btn" onclick="filterIntegrals('gammabeta', this)">Gamma/Beta Function</button>
-              <button class="tag-btn" onclick="filterIntegrals('realimag', this)">Real/Imag parts</button>
-              <button class="tag-btn" onclick="filterIntegrals('Polar', this)">Polar Form</button>
-              <button class="tag-btn" onclick="filterIntegrals('lambertW', this)">Lambert W Function</button>
-              <button class="tag-btn" onclick="filterIntegrals('cauchy', this)">Cauchy Integral formula</button>
-              <button class="tag-btn" onclick="filterIntegrals('contour', this)">Contour Integration</button>
-              <button class="tag-btn" onclick="filterIntegrals('RMT', this)">Ramanujan’s master theorem</button>
-              <button class="tag-btn" onclick="filterIntegrals('Other', this)">Other</button>
+              <button class="tag-btn active" onclick="setTag('all', this)">All</button>
+              <button class="tag-btn" onclick="setTag('parts', this)">Integration by Parts</button>
+              <button class="tag-btn" onclick="setTag('usub', this)">U-Substitution</button>
+              <button class="tag-btn" onclick="setTag('partialfracs', this)">Partial Fractions</button>
+              <button class="tag-btn" onclick="setTag('DUIS', this)">DUIS</button>
+              <button class="tag-btn" onclick="setTag('seriesstd', this)">Standard series expansion</button>
+              <button class="tag-btn" onclick="setTag('seriesfancy', this)">Fancy series expansion</button>
+              <button class="tag-btn" onclick="setTag('product', this)">Product Expansion</button>
+              <button class="tag-btn" onclick="setTag('piece', this)">Floor/Ceiling/Frac</button>
+              <button class="tag-btn" onclick="setTag('kings', this)">King's rule</button>
+              <button class="tag-btn" onclick="setTag('gammabeta', this)">Gamma/Beta Function</button>
+              <button class="tag-btn" onclick="setTag('realimag', this)">Real/Imag parts</button>
+              <button class="tag-btn" onclick="setTag('Polar', this)">Polar Form</button>
+              <button class="tag-btn" onclick="setTag('lambertW', this)">Lambert W Function</button>
+              <button class="tag-btn" onclick="setTag('cauchy', this)">Cauchy Integral formula</button>
+              <button class="tag-btn" onclick="setTag('contour', this)">Contour Integration</button>
+              <button class="tag-btn" onclick="setTag('RMT', this)">Ramanujan’s master theorem</button>
+              <button class="tag-btn" onclick="setTag('Other', this)">Other</button>
             </div>
           </div>
 
           <div class="filter-group" style="margin-bottom: 0;">
             <span class="filter-label">Filter by Month:</span>
             <div class="tag-container">
-              <button class="tag-btn" onclick="filterIntegrals('jan25', this)">Jan 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('feb25', this)">Feb 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('mar25', this)">Mar 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('apr25', this)">Apr 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('may25', this)">May 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('jun25', this)">Jun 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('jul25', this)">Jul 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('aug25', this)">Aug 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('sep25', this)">Sep 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('oct25', this)">Oct 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('nov25', this)">Nov 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('dev25', this)">Dec 2025</button>
-              <button class="tag-btn" onclick="filterIntegrals('jan26', this)">Jan 2026</button>
-              <button class="tag-btn" onclick="filterIntegrals('feb26', this)">Feb 2026</button>
-              <button class="tag-btn" onclick="filterIntegrals('mar26', this)">Mar 2026</button>
-              <button class="tag-btn" onclick="filterIntegrals('apr26', this)">Apr 2026</button>
-              <button class="tag-btn" onclick="filterIntegrals('may26', this)">May 2026</button>
-              <button class="tag-btn" onclick="filterIntegrals('jun26', this)">Jun 2026</button>
-              <button class="tag-btn" onclick="filterIntegrals('jul26', this)">July 2026</button>
-              
-                        
+              <button class="tag-btn" onclick="setTag('jan25', this)">Jan 2025</button>
+              <button class="tag-btn" onclick="setTag('feb25', this)">Feb 2025</button>
+              <button class="tag-btn" onclick="setTag('mar25', this)">Mar 2025</button>
+              <button class="tag-btn" onclick="setTag('apr25', this)">Apr 2025</button>
+              <button class="tag-btn" onclick="setTag('may25', this)">May 2025</button>
+              <button class="tag-btn" onclick="setTag('jun25', this)">Jun 2025</button>
+              <button class="tag-btn" onclick="setTag('jul25', this)">Jul 2025</button>
+              <button class="tag-btn" onclick="setTag('aug25', this)">Aug 2025</button>
+              <button class="tag-btn" onclick="setTag('sep25', this)">Sep 2025</button>
+              <button class="tag-btn" onclick="setTag('oct25', this)">Oct 2025</button>
+              <button class="tag-btn" onclick="setTag('nov25', this)">Nov 2025</button>
+              <button class="tag-btn" onclick="setTag('dec25', this)">Dec 2025</button>
+              <button class="tag-btn" onclick="setTag('jan26', this)">Jan 2026</button>
+              <button class="tag-btn" onclick="setTag('feb26', this)">Feb 2026</button>
+              <button class="tag-btn" onclick="setTag('mar26', this)">Mar 2026</button>
+              <button class="tag-btn" onclick="setTag('apr26', this)">Apr 2026</button>
+              <button class="tag-btn" onclick="setTag('may26', this)">May 2026</button>
+              <button class="tag-btn" onclick="setTag('jun26', this)">Jun 2026</button>
+              <button class="tag-btn" onclick="setTag('jul26', this)">July 2026</button>
             </div>
           </div>
-
         </div>
 
         <div id="problems-list">
           
-          <div class="integral-bar" data-tags="parts jan2026">
+          <div class="integral-bar" data-tags="parts jan26" onclick="openSolutionPage('solution-1')">
             <div class="integral-title">
               \[ \int x^x \, dx \]
             </div>
             <div class="integral-meta">
-              <span class="mini-badge">Parts</span>
+              <span class="mini-badge">Integration by Parts</span>
               <span class="mini-badge">Jan 2026</span>
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="usub feb2026">
+          <div class="integral-bar" data-tags="usub feb26" onclick="openSolutionPage('solution-2')">
             <div class="integral-title">
-              \[ \int \frac{1}{x^2 + 1} \, dx \]
+              \[ \int \sin(x) \cos(x) \, dx \]
             </div>
             <div class="integral-meta">
-              <span class="mini-badge">U-Sub</span>
+              <span class="mini-badge">U-Substitution</span>
               <span class="mini-badge">Feb 2026</span>
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="feynman jan2026">
+          <div class="integral-bar" data-tags="kings apr26" onclick="openSolutionPage('solution-3')">
             <div class="integral-title">
-              \[ \int_{0}^{\infty} \frac{\sin(x)}{x} \, dx \]
+              \[ \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \]
             </div>
             <div class="integral-meta">
-              <span class="mini-badge">Feynman</span>
-              <span class="mini-badge">Jan 2026</span>
+              <span class="mini-badge">King's Rule</span>
+              <span class="mini-badge">Apr 2026</span>
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <div id="solution-viewer" class="content-section">
+        <button class="back-btn" onclick="showSection('integral-module')">← Back to Search & Tags</button>
+        
+        <div id="solution-1" class="solution-page">
+          <h2>Problem 1</h2>
+          <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
+            \[ \int x^x \, dx \]
+          </div>
+          <p>This is where you paste your long LaTeX solution for this specific problem.</p>
+          <p>For example, using some math: \( x = e^{\ln x} \)</p>
+          <p>$$ \int e^{x \ln x} \, dx $$</p>
+        </div>
+
+        <div id="solution-2" class="solution-page">
+          <h2>Problem 2</h2>
+          <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
+            \[ \int \sin(x) \cos(x) \, dx \]
+          </div>
+          <p>Paste your LaTeX solution for problem 2 here.</p>
+        </div>
+
+        <div id="solution-3" class="solution-page">
+          <h2>Problem 3</h2>
+          <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
+            \[ \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \]
+          </div>
+          <p>Paste your LaTeX solution for problem 3 here.</p>
         </div>
 
       </div>
@@ -312,38 +380,74 @@
   </div>
 
   <script>
-    // Tab switching functionality
+    let activeFilterTag = 'all';
+
+    // 1. Tab Switching Function
     function openTab(evt, tabName) {
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach(section => section.classList.remove('active'));
-
-      const tabs = document.querySelectorAll('.tab-button');
-      tabs.forEach(tab => tab.classList.remove('active'));
-
+      document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
+      
       document.getElementById(tabName).classList.add('active');
-      if (evt && evt.currentTarget && evt.currentTarget.classList) {
-        evt.currentTarget.classList.add('active');
+      if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+    }
+
+    // 2. Simple Section Viewer (Hides everything else in the paper, shows target)
+    function showSection(sectionId) {
+      document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+      
+      // If we go back to the integral-module, tell MathJax to re-check for math just in case
+      if(sectionId === 'integral-module') {
+        MathJax.typesetPromise();
       }
     }
 
-    // Open Integral Module from Projects list
-    function showIntegralModule() {
-      const sections = document.querySelectorAll('.content-section');
-      sections.forEach(section => section.classList.remove('active'));
-      document.getElementById('integral-module').classList.add('active');
+    // 3. Open a Specific Solution Page
+    function openSolutionPage(solutionId) {
+      // Show the solution viewer container
+      showSection('solution-viewer');
+      
+      // Hide all individual solution pages
+      document.querySelectorAll('.solution-page').forEach(page => page.classList.remove('active'));
+      
+      // Show only the clicked problem's page
+      document.getElementById(solutionId).classList.add('active');
+      
+      // Render any math on the newly opened page
+      MathJax.typesetPromise();
     }
 
-    // Filtering logic for Integral bars
-    function filterIntegrals(tag, button) {
-      // Highlight selected tag button
-      const buttons = document.querySelectorAll('.tag-btn');
-      buttons.forEach(btn => btn.classList.remove('active'));
+    // 4. Set the Active Tag from buttons
+    function setTag(tag, button) {
+      // Visually highlight the clicked button
+      document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
+      
+      // Update global active tag state
+      activeFilterTag = tag;
+      
+      // Run the combined filter function
+      applyFilters();
+    }
 
-      // Show/Hide integral bars based on tags
-      const bars = document.querySelectorAll('.integral-bar');
-      bars.forEach(bar => {
-        if (tag === 'all' || bar.getAttribute('data-tags').includes(tag)) {
+    // 5. Combined Filter (Search Bar + Tags)
+    function applyFilters() {
+      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      const problemBars = document.querySelectorAll('.integral-bar');
+
+      problemBars.forEach(bar => {
+        const barTags = bar.getAttribute('data-tags');
+        // Extract plain text from the title div to search against
+        const titleText = bar.querySelector('.integral-title').textContent.toLowerCase();
+        
+        // Check if it matches the Tag
+        const matchesTag = (activeFilterTag === 'all' || barTags.includes(activeFilterTag));
+        
+        // Check if it matches the Search Bar
+        const matchesSearch = titleText.includes(searchQuery);
+
+        // If it passes BOTH filters, show it. Otherwise, hide it.
+        if (matchesTag && matchesSearch) {
           bar.style.display = 'flex';
         } else {
           bar.style.display = 'none';
@@ -351,6 +455,5 @@
       });
     }
   </script>
-
 </body>
 </html>
