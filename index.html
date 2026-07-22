@@ -353,9 +353,120 @@
           <div style="font-size: 24px; text-align: center; margin-bottom: 30px;">
             \[ \int x^x \, dx \]
           </div>
-          <p>This is where you paste your long LaTeX solution for this specific problem.</p>
-          <p>For example, using some math: \( x = e^{\ln x} \)</p>
-          <p>$$ \int e^{x \ln x} \, dx $$</p>
+          <p>\noindent
+Different integrals for $x^x$ (First four are in order of Desmos computational speed and accuracy for low number of terms). First two were found from working out, third was using a known derivation of the integral using the method of exhaustion, and fourth was using the definition of the integral using Riemann summation.
+
+\[\int x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{-x^n\ln^k x}{(-n)^{n-k}k!}+C\]
+
+\[\int x^x\,dx=\sum_{n=1}^{\infty}\Bigg(\sum_{k=0}^{\infty}\frac{n^{k+1}(\ln{x})^{n+k}}{k!n!(n+k)}-(-n)^{-n}\Bigg)+C\]
+
+\[\int x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=1}^{2^n-1}\frac{x(2^{-n}kx)^{2^{-n}kx}
+}{(-1)^{k+1}2^n}+C\]
+
+\[\int x^x\,dx=\lim_{n\to\infty}\frac{x}{n}\sum_{k=1}^{n}\Big(\frac{xk}{n}\Big)^{\frac{xk}{n}}+C\]
+\\
+\[\int_{1}^{b}x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{\infty}\frac{n^{k+1}(\ln{b})^{n+k}}{k!n!(n+k)}\]
+
+\[\therefore\int_{1}^{e}x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{\infty}\frac{n^{k+1}}{k!n!(n+k)}\]
+\\
+\[\int_{0}^{1} x^x\,dx=-\sum_{n=1}^{\infty}(-n)^{-n}\]
+
+\[\int_{0}^{1} x^{-x}\,dx=\sum_{n=1}^{\infty}n^{-n}\]
+
+\newpage
+
+\noindent
+My derivation for the best series expression of 
+
+\[\int x^x\,dx\]
+
+\[=\int_{0}^{x} t^t\,dt\]
+
+\[=\int_{0}^{x} e^{t\ln t}\,dt\]
+
+\noindent
+Using the Maclaurin series for $e^x$,
+
+\[=\int_{0}^{x} \sum_{n=0}^{\infty}\frac{(t\ln t)^n}{n!}\,dt\]
+
+\[=\sum_{n=0}^{\infty}\frac{1}{n!}\int_{0}^{x}(t\ln t)^n\,dt\]
+
+\[t=e^{\frac{-u}{n+1}},dt=\frac{-e^{\frac{-u}{n+1}}}{n+1}\,du\]
+
+\[\therefore\sum_{n=0}^{\infty}\frac{1}{n!}\int_{0}^{x}(t\ln t)^n\,dt=\sum_{n=0}^{\infty}\frac{1}{n!}\int_{\infty}^{-(n+1)\ln x}\Big(e^{\frac{-u}{n+1}}\Big)^{n+1}\bigg(\frac{-u}{n+1}\bigg)^n\bigg(\frac{-1}{n+1}\bigg)du\]
+
+\[=\sum_{n=0}^{\infty}\frac{(-1)^n}{n!(n+1)^{n+1}}\int_{-(n+1)\ln x}^{\infty}e^{-u}u^n\,du\]
+
+\[=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{(n-1)!n^{n}}\int_{-n\ln x}^{\infty}e^{-u}u^{n-1}\,du\]
+\noindent
+For readability purposes, let $-n\ln x=a$. For now, just consider the integral above.
+
+\[\int_{a}^{\infty}e^{-u}u^{n-1}\,du\]
+
+\[\textrm{IBP with }u=u^{n-1},dv=e^{-u}\]
+
+\[=e^{-a}a^{n-1}+(n-1)\int_{a}^{\infty}e^{-u}u^{n-2}\,du\]
+
+\[\textrm{Using IBP again for second time:}\]
+\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+(n-1)(n-2)\int_{a}^{\infty}e^{-u}u^{n-3}\,du\]
+
+\[\textrm{Using IBP again for third time:}\]
+\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+e^{-a}a^{n-3}(n-1)(n-2)+(n-1)(n-2)(n-3)\int_{a}^{\infty}e^{-u}u^{n-4}\,du\]
+
+\noindent
+Thus, after performing IBP a total of $n-1$ times, we get
+\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+\cdots+e^{-a}a^{2}\frac{(n-1)!}{2}+e^{-a}a(n-1)!+(n-1)!\int_{a}^{\infty}e^{-u}\,du\]
+\[=e^{-a}a^{n-1}+e^{-a}a^{n-2}(n-1)+\cdots+e^{-a}a^{2}\frac{(n-1)!}{2}+e^{-a}a(n-1)!+e^{-a}(n-1)!\]
+
+\noindent Re-arranging back to front, and rewriting:
+\[=e^{-a}(n-1)!+e^{-a}a(n-1)!+e^{-a}a^2\frac{(n-1)!}{2}+\cdots+e^{-a}a^{n-2}\frac{(n-1)!}{(n-2)!}+e^{-a}a^{n-1}\]
+
+\[=\frac{e^{-a}(n-1)!}{0!}+\frac{e^{-a}a(n-1)!}{1!}+\frac{e^{-a}a^2(n-1)!}{2!}+\cdots+\frac{e^{-a}a^{n-2}(n-1)!}{(n-2)!}+\frac{e^{-a}a^{n-1}(n-1)!}{(n-1)!}\]
+
+\[=e^{-a}(n-1)!\bigg(\frac{a^0}{0!}+\frac{a^1}{1!}+\frac{a^2}{2!}+\cdots+\frac{a^{n-2}}{(n-2)!}+\frac{a^{n-1}}{(n-1)!}\bigg)\]
+
+\[=e^{-a}(n-1)!\sum_{k=0}^{n-1}\frac{a^k}{k!}\]
+
+\noindent
+This sum is also known as the incomplete gamma function. As $a_1=-n\ln x$,
+
+\[e^{-a}(n-1)!\sum_{k=0}^{n-1}\frac{a^k}{k!}=e^{n\ln x}(n-1)!\sum_{k=0}^{n-1}\frac{(-n\ln x)^k}{k!}\]
+
+\[=x^n(n-1)!\sum_{k=0}^{n-1}\frac{(-n\ln x)^k}{k!}\]
+
+\noindent
+Using this result,
+
+\[\therefore\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{(n-1)!n^{n}}\int_{-n\ln x}^{\infty}e^{-u}u^{n-1}\,du=\sum_{n=1}^{\infty}\frac{(-1)^{n-1}x^n(n-1)!}{(n-1)!n^{n}}\sum_{k=0}^{n-1}\frac{(-n\ln x)^k}{k!}\]
+
+\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-1)^{n-1}x^n(-n\ln x)^k}{n^{n}k!}\]
+
+\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-1)^{n+k-1}x^n n^k\ln^k x}{n^{n}k!}\]
+
+\noindent
+For all values of $n$ and $k$, $(-1)^{n+k-1}=(-1)^{k-n-1}$
+
+\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-1)^{k-n-1}x^n\ln^k x}{n^{n-k}k!}\]
+
+\[=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{-x^n\ln^k x}{(-n)^{n-k}k!}\]
+
+\noindent
+Thus arriving at our solution.
+
+\[\therefore\int x^x\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{-x^n\ln^k x}{(-n)^{n-k}k!}+C\]
+\\
+\\
+\noindent
+Similarly, we can also get
+\[\int x^{-x}\,dx=\sum_{n=1}^{\infty}\sum_{k=0}^{n-1}\frac{(-x)^n\ln^k x}{(-n)^{n-k}k!}+C\]
+\\
+\\
+\noindent
+Together, these results allow us to obtain the Sophomore integrals
+
+\[\int_{0}^{1}x^x\,dx=-\sum_{n=1}^{\infty}(-n)^{-n}\]
+
+\[\int_{0}^{1}x^{-x}\,dx=\sum_{n=1}^{\infty}n^{-n}\]</p>
         </div>
 
         <div id="solution-2" class="solution-page">
