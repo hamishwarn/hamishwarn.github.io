@@ -1,10 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My First Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Personal Website</title>
+  
+  <style>
+
+    body {
+      background-color: #121212;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .website-container {
+      width: 100%;
+      max-width: 750px;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 5px;
+    }
+
+    .tab-button {
+      background-color: #252525;
+      color: #aaaaaa;
+      border: 1px solid #333333;
+      border-bottom: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-button:hover {
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+    .tab-button.active {
+      background-color: #ffffff;
+      color: #121212;
+      border-color: #ffffff;
+    }
+    
+    .paper-page {
+      background-color: #ffffff;
+      color: #222222;
+      padding: 50px;
+      border-radius: 0 8px 8px 8px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      min-height: 450px;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    h1 {
+      border-bottom: 2px solid #eeeeee;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .project-card {
+      background-color: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #333333;
+      padding: 15px 20px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to my website!</h1>
-  <p>I am building this using GitHub Pages.</p>
+
+  <div class="website-container">
+    <div class="tab-bar">
+      <button class="tab-button active" onclick="openTab(event, 'about')">About Me</button>
+      <button class="tab-button" onclick="openTab(event, 'projects')">Projects</button>
+    </div>
+
+    <div class="paper-page">
+      
+      <div id="about" class="content-section active">
+        <h1>About Me</h1>
+        <p>Hello! Welcome to my page.</p>
+        <p>I'm Hamish! I am 20 years ago and currently pursuing a Bachelor of Mathematical Sciences (Advanced) at Adelaide University.</p>
+      </div>
+
+      <div id="projects" class="content-section">
+        <h1>My Projects</h1>
+        <p>Here are some of the projects I am currently working on:</p>
+        
+        <div class="project-card">
+          <h3>Project 1: The compendium of integrals</h3>
+          <p>See here.</p>
+        </div>
+
+        <div class="project-card">
+          <h3>Project 2: Next Idea</h3>
+          <p>Add details about another project here.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function openTab(evt, tabName) {
+   
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(section => section.classList.remove('active'));
+
+
+      const tabs = document.querySelectorAll('.tab-button');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+
+      document.getElementById(tabName).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+  </script>
+
 </body>
 </html>
