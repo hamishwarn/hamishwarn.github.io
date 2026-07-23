@@ -452,9 +452,11 @@
     </div>
   </div>
 
-  <script>
-    let activeFilterTag = 'all';
+<script>
+    //A Set to keep track of all currently selected filter tags
+    let activeTags = new Set();
 
+    //Tab Switching Function (About Me / Projects)
     function openTab(evt, tabName) {
       document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
@@ -463,6 +465,7 @@
       if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
     }
 
+    //Section Switcher
     function showSection(sectionId) {
       document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
@@ -472,25 +475,54 @@
       }
     }
 
+    //setTag Function (Handles selecting & deselecting multiple tags)
     function setTag(tag, button) {
-      document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      activeFilterTag = tag;
+      if (tag === 'all') {
+        // Reset everything if "All" is clicked
+        activeTags.clear();
+        document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+      } else {
+        //Turns off the "All" button visually if a specific tag is chosen
+        const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
+        if (allBtn) allBtn.classList.remove('active');
+
+        //Toggle tag in/out of the Set
+        if (activeTags.has(tag)) {
+          activeTags.delete(tag);
+          button.classList.remove('active');
+        } else {
+          activeTags.add(tag);
+          button.classList.add('active');
+        }
+
+        //If user deselects every single tag, automatically light up "All" again
+        if (activeTags.size === 0 && allBtn) {
+          allBtn.classList.add('active');
+        }
+      }
+      
       applyFilters();
     }
 
+    //Updated Filter Function (AND logic across all selected tags + search query)
     function applyFilters() {
       const searchQuery = document.getElementById('search-input').value.toLowerCase();
       const problemBars = document.querySelectorAll('.integral-bar');
 
       problemBars.forEach(bar => {
-        const barTags = bar.getAttribute('data-tags');
+        //Get the list of space-separated tags on the problem bar
+        const barTags = bar.getAttribute('data-tags').split(' ');
         const titleText = bar.querySelector('.integral-title').textContent.toLowerCase();
         
-        const matchesTag = (activeFilterTag === 'all' || barTags.includes(activeFilterTag));
+        //Check if this problem contains EVERY tag currently selected in activeTags
+        const matchesTags = Array.from(activeTags).every(selectedTag => barTags.includes(selectedTag));
+        
+        //Check search bar query
         const matchesSearch = titleText.includes(searchQuery);
 
-        if (matchesTag && matchesSearch) {
+        //Display bar only if both checks pass
+        if (matchesTags && matchesSearch) {
           bar.style.display = 'flex';
         } else {
           bar.style.display = 'none';
