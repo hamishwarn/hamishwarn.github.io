@@ -262,19 +262,19 @@
               <button class="tag-btn" onclick="setTag('usub', this)">U-Substitution</button>
               <button class="tag-btn" onclick="setTag('partialfracs', this)">Partial Fractions</button>
               <button class="tag-btn" onclick="setTag('DUIS', this)">DUIS</button>
-              <button class="tag-btn" onclick="setTag('seriesstd', this)">Standard series expansion</button>
-              <button class="tag-btn" onclick="setTag('seriesfancy', this)">Fancy series expansion</button>
+              <button class="tag-btn" onclick="setTag('seriesstd', this)">Standard Series Expansion</button>
+              <button class="tag-btn" onclick="setTag('seriesfancy', this)">Fancy Series Expansion</button>
               <button class="tag-btn" onclick="setTag('product', this)">Product Expansion</button>
               <button class="tag-btn" onclick="setTag('piece', this)">Floor/Ceiling/Frac</button>
-              <button class="tag-btn" onclick="setTag('kings', this)">King's rule</button>
+              <button class="tag-btn" onclick="setTag('kings', this)">King's Rule</button>
               <button class="tag-btn" onclick="setTag('gammabeta', this)">Gamma/Beta Function</button>
-              <button class="tag-btn" onclick="setTag('realimag', this)">Real/Imag parts</button>
+              <button class="tag-btn" onclick="setTag('realimag', this)">Real/Imag Parts</button>
               <button class="tag-btn" onclick="setTag('Polar', this)">Polar Form</button>
               <button class="tag-btn" onclick="setTag('lambertW', this)">Lambert W Function</button>
-              <button class="tag-btn" onclick="setTag('cauchy', this)">Cauchy Integral formula</button>
+              <button class="tag-btn" onclick="setTag('cauchy', this)">Cauchy Integral Formula</button>
               <button class="tag-btn" onclick="setTag('contour', this)">Contour Integration</button>
-              <button class="tag-btn" onclick="setTag('RMT', this)">Ramanujan’s master theorem</button>
-              <button class="tag-btn" onclick="setTag('Other', this)">Other</button>
+              <button class="tag-btn" onclick="setTag('RMT', this)">Ramanujan’s Master Theorem</button>
+              <button class="tag-btn" onclick="setTag('other', this)">Other</button>
             </div>
           </div>
 
@@ -306,34 +306,142 @@
 
         <div id="problems-list">
           
-          <div class="integral-bar" data-tags="parts jan26" onclick="window.open('My_Integral_Compilation.pdf#page=16', '_blank')">
+          <div class="integral-bar" data-tags="parts usub seriesstd feb25" onclick="window.open('My_Integral_Compilation.pdf#page=16', '_blank')">
             <div class="integral-title">
               \[ \int x^x \, dx \]
             </div>
             <div class="integral-meta">
               <span class="mini-badge">Integration by Parts</span>
-              <span class="mini-badge">Jan 2026</span>
+              <span class="mini-badge">U-Substitution</span>
+              <span class="mini-badge">Standard Series Expansion</span>
+              <span class="mini-badge">Feb 2025</span>
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="usub feb26" onclick="window.open('My_Integral_Compilation.pdf#page=19', '_blank')">
+          <div class="integral-bar" data-tags="DUIS partialfracs usub feb25" onclick="window.open('My_Integral_Compilation.pdf#page=19', '_blank')">
             <div class="integral-title">
-              \[ \int \sin(x) \cos(x) \, dx \]
+              \[\int_{-\frac{\pi}{2}}^{\frac{\pi}{2}}\frac{x}{\tan{x}}\,dx\]
             </div>
             <div class="integral-meta">
+              <span class="mini-badge">DUIS</span>
+              <span class="mini-badge">Partial Fractions</span>
               <span class="mini-badge">U-Substitution</span>
-              <span class="mini-badge">Feb 2026</span>
+              <span class="mini-badge">Feb 2025</span>
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="kings apr26" onclick="window.open('My_Integral_Compilation.pdf#page=25', '_blank')">
+          <div class="integral-bar" data-tags="DUIS parts feb25" onclick="window.open('My_Integral_Compilation.pdf#page=21', '_blank')">
             <div class="integral-title">
-              \[ \int_{0}^{\pi} \frac{x \sin x}{1 + \cos^2 x} \, dx \]
+              \[\int_{-\infty}^{\infty}\frac{\sin{x}}{x}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">DUIS</span>
+              <span class="mini-badge">Integration by Parts</span>
+              <span class="mini-badge">Feb 2025</span>
+            </div>
+
+          <div class="integral-bar" data-tags="DUIS parts usub partialfracs feb25" onclick="window.open('My_Integral_Compilation.pdf#page=22', '_blank')">
+            <div class="integral-title">
+              \[\int_{-\infty}^{\infty}\frac{\cos{x}}{1+x^2}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">DUIS</span>
+              <span class="mini-badge">Integration by Parts</span>
+              <span class="mini-badge">Partial Fractions</span>
+              <span class="mini-badge">U-Substitution</span>
+              <span class="mini-badge">Feb 2025</span>
+            </div>
+          </div>
+
+          <div class="integral-bar" data-tags="DUIS partialfracs usub feb25" onclick="window.open('My_Integral_Compilation.pdf#page=25', '_blank')">
+            <div class="integral-title">
+              \[\int_{0}^{1}\frac{\ln(x+1)}{x^2+1}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">DUIS</span>
+              <span class="mini-badge">Partial Fractions</span>
+              <span class="mini-badge">U-Substitution</span>
+              <span class="mini-badge">Feb 2025</span>
+            </div>
+          </div>
+
+          <div class="integral-bar" data-tags="DUIS partialfracs feb25" onclick="window.open('My_Integral_Compilation.pdf#page=27', '_blank')">
+            <div class="integral-title">
+              \[\int_{0}^{\infty}\frac{\ln(x^2+1)}{x^2+1}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">DUIS</span>
+              <span class="mini-badge">Partial Fractions</span>
+              <span class="mini-badge">Feb 2025</span>
+            </div>
+
+
+
+
+          <div class="integral-bar" data-tags="piece mar25" onclick="window.open('My_Integral_Compilation.pdf#page=28', '_blank')">
+            <div class="integral-title">
+              \[\int_{2}^{\infty}\frac{(-1)^{\lfloor x \rfloor}}{\lfloor x-2\rfloor!\lceil x-2\rceil x^2}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">Floor/Ceiling/Frac</span>
+              <span class="mini-badge">Mar 2025</span>
+            </div>
+          </div>
+
+          <div class="integral-bar" data-tags="piece mar25" onclick="window.open('My_Integral_Compilation.pdf#page=29', '_blank')">
+            <div class="integral-title">
+              \[\int_{0}^{1}\biggl\lfloor \frac{1}{x} \biggl\rfloor^{-1}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">Floor/Ceiling/Frac</span>
+              <span class="mini-badge">Mar 2025</span>
+            </div>
+          </div>
+
+          <div class="integral-bar" data-tags="piece mar25" onclick="window.open('My_Integral_Compilation.pdf#page=31', '_blank')">
+            <div class="integral-title">
+              \[\int_{0}^{\infty}\frac{\cosh{x}}{\lfloor e^x\rfloor!}\,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">Floor/Ceiling/Frac</span>
+              <span class="mini-badge">Mar 2025</span>
+            </div>
+
+          <div class="integral-bar" data-tags="seriesstd other mar25" onclick="window.open('My_Integral_Compilation.pdf#page=32', '_blank')">
+            <div class="integral-title">
+              \[\lim_{n\to\infty}\int_{0}^{1}x\sqrt{x\sqrt[3]{x\sqrt[4]{x\cdots\sqrt[n]{x}}}} \,dx\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">Other</span>
+              <span class="mini-badge">Standard Series Expansion</span>
+              <span class="mini-badge">Mar 2025</span>
+            </div>
+          </div>
+
+          <div class="integral-bar" data-tags="kings usub mar25" onclick="window.open('My_Integral_Compilation.pdf#page=34', '_blank')">
+            <div class="integral-title">
+              \[\int_{0}^{\frac{\pi}{2}}\frac{\cos{x}}{\big(1+\sqrt{\sin{2x}}\big)^2}\,dx\]
             </div>
             <div class="integral-meta">
               <span class="mini-badge">King's Rule</span>
-              <span class="mini-badge">Apr 2026</span>
+              <span class="mini-badge">U-Substitution</span>
+              <span class="mini-badge">Mar 2025</span>
             </div>
+          </div>
+
+          <div class="integral-bar" data-tags="gammabeta seriesstd mar25" onclick="window.open('My_Integral_Compilation.pdf#page=35', '_blank')">
+            <div class="integral-title">
+              \[\sum_{n=0}^{\infty}\frac{(k!)^2}{(2k+1)!}\]
+            </div>
+            <div class="integral-meta">
+              <span class="mini-badge">Beta/Gamma Function</span>
+              <span class="mini-badge">Standard Series Expansion</span>
+              <span class="mini-badge">Mar 2025</span>
+            </div>
+
+
+
+            
           </div>
 
         </div>
