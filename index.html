@@ -6,6 +6,25 @@
   <title>My Personal Website</title>
   
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script>
+  window.MathJax = {
+    tex: {
+      macros: {
+        sech: "\\operatorname{sech}",
+        csch: "\\operatorname{csch}",
+        arcsec: "\\operatorname{arcsec}",
+        arccot: "\\operatorname{arccot}",
+        arccsc: "\\operatorname{arccsc}",
+        arccosh: "\\operatorname{arccosh}",
+        arcsinh: "\\operatorname{arcsinh}",
+        arctanh: "\\operatorname{arctanh}",
+        arcsech: "\\operatorname{arcsech}",
+        arccoth: "\\operatorname{arccoth}",
+        arccsch: "\\operatorname{arccsch}"
+      }
+    }
+  };
+</script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
 
   <style>
@@ -263,7 +282,7 @@
             📄 Open Original Full PDF Compilation
           </a>
 
-          <input type="text" id="search-input" class="search-bar" placeholder="Search keywords in title (e.g., \sin or x^x)..." onkeyup="applyFilters()">
+          <input type="text" id="search-input" class="search-bar" placeholder="Search keywords in title (e.g., sin or ln)..." onkeyup="applyFilters()">
 
           <div class="filter-group">
             <span class="filter-label">Order:</span>
