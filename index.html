@@ -197,6 +197,7 @@
 
     /* Thick Integral Problem Bars */
     .integral-bar {
+      position: relative;
       background-color: #f9f9f9;
       border: 2px solid #333333;
       border-radius: 8px;
@@ -209,6 +210,23 @@
       transition: background-color 0.2s, transform 0.15s;
     }
 
+    .integral-bar.is-difficult::after {
+      content: "★ Hard"; /* Change to "" if you want just a plain red square without text */
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #dc2626; /* Vibrant red */
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 8px;
+      border-bottom-left-radius: 6px;
+      border-top-right-radius: 6px; /* Matches the outer box radius */
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.15);
+    }
+    
     .integral-bar:hover {
       background-color: #f0f4f8;
       transform: scale(1.01);
@@ -296,6 +314,7 @@
             <span class="filter-label">Filter by Method:</span>
             <div class="tag-container">
               <button class="tag-btn active" onclick="setTag('all', this)">All</button>
+              <button class="tag-btn" onclick="setTag('difficult', this)" style="border-color: #dc2626; color: #dc2626; font-weight: bold;">★ Extra Difficult</button>
               <button class="tag-btn" onclick="setTag('parts', this)">IBP</button>
               <button class="tag-btn" onclick="setTag('usub', this)">U-Sub</button>
               <button class="tag-btn" onclick="setTag('partialfracs', this)">Partial Fractions</button>
@@ -343,7 +362,7 @@
 
         <div id="problems-list">
           
-          <div class="integral-bar" data-tags="parts usub series feb25" onclick="window.open('My_Integral_Compilation.pdf#page=16', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="parts usub series feb25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=16', '_blank')">
             <div class="integral-title">
               \[ \int x^x \, dx \]
             </div>
@@ -378,7 +397,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS parts usub partialfracs feb25" onclick="window.open('My_Integral_Compilation.pdf#page=22', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="DUIS parts usub partialfracs feb25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=22', '_blank')">
             <div class="integral-title">
               \[\int_{-\infty}^{\infty}\frac{\cos{x}}{1+x^2}\,dx\]
             </div>
@@ -413,9 +432,6 @@
               <span class="mini-badge">Feb 2025</span>
             </div>
           </div>
-
-
-
 
           <div class="integral-bar" data-tags="piece mar25" onclick="window.open('My_Integral_Compilation.pdf#page=28', '_blank')">
             <div class="integral-title">
@@ -568,7 +584,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="series parts real/imag usub apr25" onclick="window.open('My_Integral_Compilation.pdf#page=46', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="series parts real/imag usub apr25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=46', '_blank')">
             <div class="integral-title">
               \[\int_{-\infty}^{\infty}x^2e^{-2x^2}\cos^2(2x^2)\,dx\]
             </div>
@@ -677,7 +693,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="series kings parts usub jun25" onclick="window.open('My_Integral_Compilation.pdf#page=64', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="series kings parts usub jun25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=64', '_blank')">
             <div class="integral-title">
               \[\int_{-\infty}^{\infty}\arctan(e^x)\arctan(e^{-x})\,dx\]
             </div>
@@ -878,7 +894,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="other series usub jul25" onclick="window.open('My_Integral_Compilation.pdf#page=94', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="other series usub jul25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=94', '_blank')">
             <div class="integral-title">
               \[\int_{0}^{\infty}(a^{-x})^{(a^{x})^{(a^{-x})^{(a^{x})^{\cdots}}}}\,dx\]
             </div>
@@ -914,7 +930,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="realimag cauchy usub aug25" onclick="window.open('My_Integral_Compilation.pdf#page=99', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="realimag cauchy usub aug25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=99', '_blank')">
             <div class="integral-title">
               \[\textrm{Cauchy Integral Formula Reverse Solve}\]
             </div>
@@ -993,7 +1009,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS kings usub realimag nov25" onclick="window.open('My_Integral_Compilation.pdf#page=109', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="DUIS kings usub realimag nov25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=109', '_blank')">
             <div class="integral-title">
               \[\int_{-1}^{1}\frac{1}{x}\sqrt{\frac{1+x}{1-x}}\ln\biggl(\frac{2x^2+2x+1}{2x^2-2x+1}\bigg)dx\]
             </div>
@@ -1006,7 +1022,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS realimag usub nov25" onclick="window.open('My_Integral_Compilation.pdf#page=113', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="DUIS realimag usub nov25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=113', '_blank')">
             <div class="integral-title">
               \[\int_{0}^{\pi}\arctan(1+\cos x)\,dx\]
             </div>
@@ -1042,7 +1058,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS series partialfracs product usub nov25" onclick="window.open('My_Integral_Compilation.pdf#page=119', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="DUIS series partialfracs product usub nov25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=119', '_blank')">
             <div class="integral-title">
               \[\int_{0}^{\infty}\ln\biggl(\frac{\tanh x}{x}\biggl)\frac{1}{x^2(x^2+1)}\,dx\]
             </div>
@@ -1109,7 +1125,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="series realimag dec25" onclick="window.open('My_Integral_Compilation.pdf#page=130', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="series realimag dec25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=130', '_blank')">
             <div class="integral-title">
               \[\int_{0}^{1}\prod_{n=1}^{\infty}(1-x^n)\,dx\]
             </div>
@@ -1120,7 +1136,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="series gammabeta usub dec25" onclick="window.open('My_Integral_Compilation.pdf#page=134', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="series gammabeta usub dec25 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=134', '_blank')">
             <div class="integral-title">
              \[\int_{1}^{\infty}\frac{\ln(\ln x)}{x^{2}+2x\cos a+1}\,dx\]
             </div>
@@ -1185,7 +1201,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="series lambertW usub mar26" onclick="window.open('My_Integral_Compilation.pdf#page=142', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="series lambertW usub mar26 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=142', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{\frac{1}{2}}\frac{(1-x)^{x-1}}{x^x}\,dx\]
             </div>
@@ -1197,7 +1213,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="contour usub realimag series mar26" onclick="window.open('My_Integral_Compilation.pdf#page=145', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="contour usub realimag series mar26 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=145', '_blank')">
             <div class="integral-title">
               \[\int_{0}^{1}\sin(\pi x)x^x(1-x)^{1-x}\,dx\]
             </div>
@@ -1282,7 +1298,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="other series parts partialfracs usub apr26" onclick="window.open('My_Integral_Compilation.pdf#page=163', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="other series parts partialfracs usub apr26 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=163', '_blank')">
             <div class="integral-title">
               \[\int_{0}^{1}\ln(1-x)\ln(x)\ln(1+x)\,dx\]
             </div>
@@ -1308,7 +1324,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS series usub may26" onclick="window.open('My_Integral_Compilation.pdf#page=177', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="DUIS series usub may26 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=177', '_blank')">
             <div class="integral-title">
               \[\prod_{n=1}^{\infty}\biggl(1-\frac{1}{(2n+1)^2}\bigg)^{(-1)^n(2n+1)}\]
             </div>
@@ -1405,7 +1421,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="gammabeta kings usub parts series jun26" onclick="window.open('My_Integral_Compilation.pdf#page=193', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="gammabeta kings usub parts series jun26 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=193', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{1}\ln G(x)\,dx\,\,\Biggl|\,\,\int_{0}^{1}\ln K(x)\,dx\]
             </div>
@@ -1466,7 +1482,7 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="contour realimag usub product jun26" onclick="window.open('My_Integral_Compilation.pdf#page=202', '_blank')">
+          <div class="integral-bar is-difficult" data-tags="contour realimag usub product jun26 difficult" onclick="window.open('My_Integral_Compilation.pdf#page=202', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{\infty}\frac{\ln x}{x^2-1}\prod_{n=1}^{\alpha}\frac{1}{x^2+n^2}\,dx\]
             </div>
