@@ -20,7 +20,18 @@
 
     .website-container {
       width: 100%;
-      max-width: 850px; 
+      max-width: 850px;
+      transition: max-width 0.3s ease; /* Adds a smooth expanding/shrinking animation */
+    }
+
+    /* Wider container ONLY when viewing the Integral Compilation page */
+    .website-container.wide-mode {
+      max-width: 1000px; /* Change to 1200px or 1300px to make the white page stretch even wider */
+    }
+
+    /* Optional: Give the math boxes slightly more side-to-side room when in wide mode */
+    .website-container.wide-mode .paper-page {
+      padding: 40px 30px;
     }
 
     .tab-bar {
@@ -824,7 +835,7 @@
 
           <div class="integral-bar" data-tags="realimag cauchy usub aug25" onclick="window.open('My_Integral_Compilation.pdf#page=99', '_blank')">
             <div class="integral-title">
-              \[\texrm{Cauchy Integral Formula Reverse Solve}\]
+              \[\textrm{Cauchy Integral Formula Reverse Solve}\]
             </div>
             <div class="integral-meta">
               <span class="mini-badge">Cauchy Integral Formula</span>
@@ -872,6 +883,9 @@
       
       document.getElementById(tabName).classList.add('active');
       if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+
+      // Shrink back to normal width when switching to About Me or Projects
+      document.querySelector('.website-container').classList.remove('wide-mode');
     }
 
     // Section Switcher
@@ -879,8 +893,13 @@
       document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
       
-      if(sectionId === 'integral-module') {
+      // Expand to wide width when viewing the Integral Module
+      const container = document.querySelector('.website-container');
+      if (sectionId === 'integral-module') {
+        container.classList.add('wide-mode');
         MathJax.typesetPromise();
+      } else {
+        container.classList.remove('wide-mode');
       }
     }
 
