@@ -255,6 +255,14 @@
           <input type="text" id="search-input" class="search-bar" placeholder="Search keywords in title (e.g., \sin or x^x)..." onkeyup="applyFilters()">
 
           <div class="filter-group">
+            <span class="filter-label">Order:</span>
+            <div class="tag-container">
+              <button class="tag-btn active" onclick="setOrder('chronological', this)">Chronological</button>
+              <button class="tag-btn" onclick="setOrder('antichronological', this)">Antichronological</button>
+            </div>
+          </div>
+          
+          <div class="filter-group">
             <span class="filter-label">Filter by Method:</span>
             <div class="tag-container">
               <button class="tag-btn active" onclick="setTag('all', this)">All</button>
@@ -453,9 +461,10 @@
   </div>
 
 <script>
-    // 1. Separate state tracking: a Set for multiple methods, a single variable for month
+    // 1. State tracking for methods, month, and sort order
     let activeMethods = new Set();
     let activeMonth = null;
+    let activeOrder = 'chronological'; // Default order
 
     // Tab Switching Function (About Me / Projects)
     function openTab(evt, tabName) {
@@ -476,31 +485,59 @@
       }
     }
 
-    // 2. Updated setTag: Automatically distinguishes between Methods and Months
+    // 2. Order Switcher Function
+    function setOrder(order, button) {
+      activeOrder = order;
+      
+      // Update visual active state only for the order buttons
+      button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      button.classList.add('active');
+
+      applyFilters();
+    }
+
+    // 3. Helper: Converts date tags like "jan26" into a sortable number like 2601
+    function getBarDateValue(bar) {
+      const tags = bar.getAttribute('data-tags').toLowerCase().split(' ');
+      const months = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+      
+      for (let tag of tags) {
+        // Matches letters followed by 2 digits (e.g., "jan26", "feb25")
+        const match = tag.match(/^([a-z]+)(\d{2})$/);
+        if (match) {
+          const monthStr = match[1].substring(0, 3); // Grabs first 3 letters (handles "jul" or "july")
+          if (months[monthStr]) {
+            const year = parseInt(match[2], 10);
+            return year * 100 + months[monthStr]; // Example: 26 * 100 + 1 = 2601
+          }
+        }
+      }
+      return 0; // Fallback for bars without a date tag
+    }
+
+    // 4. Updated setTag: Automatically distinguishes between Methods and Months
     function setTag(tag, button) {
       const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
 
       if (tag === 'all') {
-        // Reset everything if "All" is clicked
+        // Reset filters if "All" is clicked (does not reset sort order!)
         activeMethods.clear();
         activeMonth = null;
-        document.querySelectorAll('.tag-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.filter-group:not(:first-child) .tag-btn').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
       } else {
-        // Turn off the "All" button visually when any specific filter is chosen
         if (allBtn) allBtn.classList.remove('active');
 
-        // Check if the clicked button is inside the "Filter by Month" container
         const isMonthTag = button.closest('.filter-group').textContent.includes('Month');
 
         if (isMonthTag) {
           // --- MONTH LOGIC (Single-Select) ---
           if (activeMonth === tag) {
-            // Clicking the already-active month deselects it
             activeMonth = null;
             button.classList.remove('active');
           } else {
-            // Clicking a new month clears all other month buttons first
             activeMonth = tag;
             button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
               btn.classList.remove('active');
@@ -518,7 +555,6 @@
           }
         }
 
-        // If every single method AND month is deselected, automatically light up "All" again
         if (activeMethods.size === 0 && activeMonth === null && allBtn) {
           allBtn.classList.add('active');
         }
@@ -527,26 +563,31 @@
       applyFilters();
     }
 
-    // 3. Updated Filter Function: Requires matching ALL active methods AND the active month
+    // 5. Updated Filter & Sort Function
     function applyFilters() {
       const searchQuery = document.getElementById('search-input').value.toLowerCase();
-      const problemBars = document.querySelectorAll('.integral-bar');
+      const container = document.getElementById('problems-list');
+      const problemBars = Array.from(container.querySelectorAll('.integral-bar'));
 
+      // Sort the array of bars dynamically based on date value
+      problemBars.sort((a, b) => {
+        const dateA = getBarDateValue(a);
+        const dateB = getBarDateValue(b);
+        return activeOrder === 'chronological' ? dateA - dateB : dateB - dateA;
+      });
+
+      // Re-insert sorted bars into the DOM (moves existing elements in the new order)
+      problemBars.forEach(bar => container.appendChild(bar));
+
+      // Check display conditions for each bar
       problemBars.forEach(bar => {
-        // Get the space-separated list of tags on this specific problem bar
         const barTags = bar.getAttribute('data-tags').split(' ');
         const titleText = bar.querySelector('.integral-title').textContent.toLowerCase();
         
-        // 1. Check if the problem has EVERY method currently selected
         const matchesMethods = Array.from(activeMethods).every(selectedMethod => barTags.includes(selectedMethod));
-        
-        // 2. Check if the problem matches the selected month (if one is selected)
         const matchesMonth = (activeMonth === null) || barTags.includes(activeMonth);
-        
-        // 3. Check search bar query
         const matchesSearch = titleText.includes(searchQuery);
 
-        // Display the problem only if it satisfies all three conditions
         if (matchesMethods && matchesMonth && matchesSearch) {
           bar.style.display = 'flex';
         } else {
