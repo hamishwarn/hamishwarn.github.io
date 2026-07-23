@@ -601,7 +601,14 @@
     // 1. State tracking for methods, month, and sort order
     let activeMethods = new Set();
     let activeMonth = null;
-    let activeOrder = 'chronological'; // Default order
+    let activeOrder = 'chronological'; // Matches initial active button state in HTML
+
+    // Store original HTML positions when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.integral-bar').forEach((bar, index) => {
+        bar.dataset.originalIndex = index;
+      });
+    });
 
     // Tab Switching Function (About Me / Projects)
     function openTab(evt, tabName) {
@@ -622,15 +629,20 @@
       }
     }
 
-    // 2. Order Switcher Function
+    // 2. Updated Order Switcher (Allows deselecting/toggling off)
     function setOrder(order, button) {
-      activeOrder = order;
-      
-      // Update visual active state only for the order buttons
-      button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      button.classList.add('active');
+      if (activeOrder === order) {
+        // Clicking the currently active order button deselects it
+        activeOrder = null;
+        button.classList.remove('active');
+      } else {
+        // Selecting a new order
+        activeOrder = order;
+        button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        button.classList.add('active');
+      }
 
       applyFilters();
     }
@@ -641,25 +653,23 @@
       const months = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
       
       for (let tag of tags) {
-        // Matches letters followed by 2 digits (e.g., "jan26", "feb25")
         const match = tag.match(/^([a-z]+)(\d{2})$/);
         if (match) {
-          const monthStr = match[1].substring(0, 3); // Grabs first 3 letters (handles "jul" or "july")
+          const monthStr = match[1].substring(0, 3);
           if (months[monthStr]) {
             const year = parseInt(match[2], 10);
-            return year * 100 + months[monthStr]; // Example: 26 * 100 + 1 = 2601
+            return year * 100 + months[monthStr];
           }
         }
       }
-      return 0; // Fallback for bars without a date tag
+      return 0;
     }
 
-    // 4. Updated setTag: Automatically distinguishes between Methods and Months
+    // 4. Tag Handler (Handles Methods, Months, and 'All' button)
     function setTag(tag, button) {
       const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
 
       if (tag === 'all') {
-        // Reset filters if "All" is clicked (does not reset sort order!)
         activeMethods.clear();
         activeMonth = null;
         document.querySelectorAll('.filter-group:not(:first-child) .tag-btn').forEach(btn => btn.classList.remove('active'));
@@ -670,7 +680,6 @@
         const isMonthTag = button.closest('.filter-group').textContent.includes('Month');
 
         if (isMonthTag) {
-          // --- MONTH LOGIC (Single-Select) ---
           if (activeMonth === tag) {
             activeMonth = null;
             button.classList.remove('active');
@@ -682,7 +691,6 @@
             button.classList.add('active');
           }
         } else {
-          // --- METHOD LOGIC (Multi-Select) ---
           if (activeMethods.has(tag)) {
             activeMethods.delete(tag);
             button.classList.remove('active');
@@ -700,23 +708,33 @@
       applyFilters();
     }
 
-    // 5. Updated Filter & Sort Function
+    // 5. Filter & Sort Processing
     function applyFilters() {
       const searchQuery = document.getElementById('search-input').value.toLowerCase();
       const container = document.getElementById('problems-list');
       const problemBars = Array.from(container.querySelectorAll('.integral-bar'));
 
-      // Sort the array of bars dynamically based on date value
-      problemBars.sort((a, b) => {
-        const dateA = getBarDateValue(a);
-        const dateB = getBarDateValue(b);
-        return activeOrder === 'chronological' ? dateA - dateB : dateB - dateA;
+      // Ensure index stamps exist if dynamic loading was used
+      problemBars.forEach((bar, idx) => {
+        if (!bar.dataset.originalIndex) bar.dataset.originalIndex = idx;
       });
 
-      // Re-insert sorted bars into the DOM (moves existing elements in the new order)
+      // Sort based on active order or fall back to original HTML position
+      problemBars.sort((a, b) => {
+        if (activeOrder === 'chronological') {
+          return getBarDateValue(a) - getBarDateValue(b);
+        } else if (activeOrder === 'antichronological') {
+          return getBarDateValue(b) - getBarDateValue(a);
+        } else {
+          // Default: Original DOM order
+          return parseInt(a.dataset.originalIndex, 10) - parseInt(b.dataset.originalIndex, 10);
+        }
+      });
+
+      // Re-insert sorted elements
       problemBars.forEach(bar => container.appendChild(bar));
 
-      // Check display conditions for each bar
+      // Display checks
       problemBars.forEach(bar => {
         const barTags = bar.getAttribute('data-tags').split(' ');
         const titleText = bar.querySelector('.integral-title').textContent.toLowerCase();
