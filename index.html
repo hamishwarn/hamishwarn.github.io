@@ -36,7 +36,7 @@
       --text-muted: #6E6862;    /* Warm gray for minor labels and inactive tabs */
       --border-color: #E6DCD0;  /* Subtle taupe border */
       --accent-warm: #C8B8A6;   /* Richer taupe for hover states */
-      --tools-bg: #F5EFE6;      /* Soft ivory for tool containers */
+      --tools-bg: #FAF7F2;      /* Soft ivory for tool containers */
     }
 
     body {
@@ -194,12 +194,14 @@
     .tag-btn {
       background-color: var(--bg-card);
       color: var(--text-main);
-      border: 1px solid var(--border-color);
+      border: 1.5px solid #D4C8BC; /* Increased thickness to 1.5px and darkened slightly for definition */
       border-radius: 20px;
       padding: 6px 14px;
       font-size: 13px;
+      font-weight: 500; /* Added slight font weight for crispness */
       cursor: pointer;
-      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(44, 42, 41, 0.04); /* Subtle lift */
+      transition: all 0.2s ease;
     }
 
     .tag-btn:hover {
