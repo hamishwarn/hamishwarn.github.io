@@ -7,29 +7,41 @@
   
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script>
-  window.MathJax = {
-    tex: {
-      macros: {
-        sech: "\\operatorname{sech}",
-        csch: "\\operatorname{csch}",
-        arcsec: "\\operatorname{arcsec}",
-        arccot: "\\operatorname{arccot}",
-        arccsc: "\\operatorname{arccsc}",
-        arccosh: "\\operatorname{arccosh}",
-        arcsinh: "\\operatorname{arcsinh}",
-        arctanh: "\\operatorname{arctanh}",
-        arcsech: "\\operatorname{arcsech}",
-        arccoth: "\\operatorname{arccoth}",
-        arccsch: "\\operatorname{arccsch}"
+    window.MathJax = {
+      tex: {
+        macros: {
+          sech: "\\operatorname{sech}",
+          csch: "\\operatorname{csch}",
+          arcsec: "\\operatorname{arcsec}",
+          arccot: "\\operatorname{arccot}",
+          arccsc: "\\operatorname{arccsc}",
+          arccosh: "\\operatorname{arccosh}",
+          arcsinh: "\\operatorname{arcsinh}",
+          arctanh: "\\operatorname{arctanh}",
+          arcsech: "\\operatorname{arcsech}",
+          arccoth: "\\operatorname{arccoth}",
+          arccsch: "\\operatorname{arccsch}"
+        }
       }
-    }
-  };
-</script>
+    };
+  </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js"></script>
 
   <style>
+    :root {
+      /* Warm Academic Cream Palette */
+      --bg-main: #FAF6F0;       /* Soft warm cream background */
+      --bg-card: #FFFFFF;       /* Crisp white for problem boxes & paper pages */
+      --text-main: #2C2A29;     /* Deep charcoal text for comfortable reading */
+      --text-muted: #6E6862;    /* Warm gray for minor labels and inactive tabs */
+      --border-color: #E6DCD0;  /* Subtle taupe border */
+      --accent-warm: #C8B8A6;   /* Richer taupe for hover states */
+      --tools-bg: #F5EFE6;      /* Soft ivory for tool containers */
+    }
+
     body {
-      background-color: #121212;
+      background-color: var(--bg-main);
+      color: var(--text-main);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 40px 20px;
@@ -40,15 +52,13 @@
     .website-container {
       width: 100%;
       max-width: 850px;
-      transition: max-width 0.3s ease; /* Adds a smooth expanding/shrinking animation */
+      transition: max-width 0.3s ease;
     }
 
-    /* Wider container ONLY when viewing the Integral Compilation page */
     .website-container.wide-mode {
-      max-width: 1000px; /* Change to 1200px or 1300px to make the white page stretch even wider */
+      max-width: 1000px;
     }
 
-    /* Optional: Give the math boxes slightly more side-to-side room when in wide mode */
     .website-container.wide-mode .paper-page {
       padding: 35px 30px;
     }
@@ -59,9 +69,9 @@
     }
 
     .tab-button {
-      background-color: #252525;
-      color: #aaaaaa;
-      border: 1px solid #333333;
+      background-color: #EAE0D5;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
       border-bottom: none;
       padding: 12px 24px;
       font-size: 16px;
@@ -73,22 +83,23 @@
     }
 
     .tab-button:hover {
-      background-color: #333333;
-      color: #ffffff;
+      background-color: #DFD3C3;
+      color: var(--text-main);
     }
 
     .tab-button.active {
-      background-color: #ffffff;
-      color: #121212;
-      border-color: #ffffff;
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border-color: var(--border-color);
     }
 
     .paper-page {
-      background-color: #ffffff;
-      color: #222222;
+      background-color: var(--bg-card);
+      color: var(--text-main);
       padding: 40px 50px;
+      border: 1px solid var(--border-color);
       border-radius: 0 8px 8px 8px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 8px 24px rgba(44, 42, 41, 0.05);
       min-height: 600px;
     }
 
@@ -101,15 +112,16 @@
     }
 
     h1 {
-      border-bottom: 2px solid #eeeeee;
+      border-bottom: 2px solid var(--border-color);
       padding-bottom: 10px;
       margin-top: 0;
+      color: var(--text-main);
     }
 
     .project-card {
-      background-color: #f8f9fa;
-      border: 1px solid #e0e0e0;
-      border-left: 5px solid #252525;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 5px solid var(--text-main);
       padding: 20px;
       margin-top: 20px;
       border-radius: 6px;
@@ -119,20 +131,21 @@
 
     .project-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(44, 42, 41, 0.08);
     }
 
     /* Filters, Search, and PDF Links */
     .tools-container {
-      background-color: #f5f5f5;
+      background-color: var(--tools-bg);
       padding: 20px;
+      border: 1px solid var(--border-color);
       border-radius: 8px;
       margin-bottom: 25px;
     }
 
     .pdf-link {
       display: inline-block;
-      background-color: #252525;
+      background-color: var(--text-main);
       color: #ffffff;
       padding: 10px 15px;
       border-radius: 6px;
@@ -140,21 +153,24 @@
       font-weight: bold;
       margin-bottom: 20px;
       font-size: 14px;
+      transition: background-color 0.2s;
     }
     
     .pdf-link:hover {
-      background-color: #444444;
+      background-color: #4A4643;
     }
 
     .search-bar {
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border-color);
       border-radius: 6px;
       margin-bottom: 20px;
       box-sizing: border-box;
       font-family: monospace;
+      background-color: var(--bg-card);
+      color: var(--text-main);
     }
 
     .filter-group {
@@ -164,7 +180,7 @@
     .filter-label {
       font-weight: bold;
       font-size: 14px;
-      color: #555;
+      color: var(--text-muted);
       margin-bottom: 6px;
       display: block;
     }
@@ -176,8 +192,9 @@
     }
 
     .tag-btn {
-      background-color: #e0e0e0;
-      border: 1px solid #ccc;
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 6px 14px;
       font-size: 13px;
@@ -186,20 +203,22 @@
     }
 
     .tag-btn:hover {
-      background-color: #d0d0d0;
+      background-color: var(--accent-warm);
+      color: #ffffff;
+      border-color: var(--accent-warm);
     }
 
     .tag-btn.active {
-      background-color: #252525;
+      background-color: var(--text-main);
       color: #ffffff;
-      border-color: #252525;
+      border-color: var(--text-main);
     }
 
     /* Thick Integral Problem Bars */
     .integral-bar {
       position: relative;
-      background-color: #f9f9f9;
-      border: 2px solid #333333;
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-color);
       border-radius: 8px;
       padding: 18px 24px;
       margin-top: 15px;
@@ -207,29 +226,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background-color 0.2s, transform 0.15s;
+      box-shadow: 0 2px 6px rgba(44, 42, 41, 0.03);
+      transition: background-color 0.2s, transform 0.15s, box-shadow 0.15s;
     }
 
     .integral-bar.is-difficult::after {
-      content: "★ Extra Difficult"; /* Change to "" if you want just a plain red square without text */
+      content: "★ Extra Difficult";
       position: absolute;
       top: 0;
       right: 0;
-      background-color: #dc2626; /* Vibrant red */
+      background-color: #dc2626; /* Vibrant red pops beautifully against cream */
       color: #ffffff;
       font-size: 11px;
       font-weight: bold;
       padding: 3px 8px;
       border-bottom-left-radius: 6px;
-      border-top-right-radius: 6px; /* Matches the outer box radius */
+      border-top-right-radius: 6px;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.15);
     }
     
     .integral-bar:hover {
-      background-color: #f0f4f8;
-      transform: scale(1.01);
+      background-color: #FDFBF7;
+      border-color: var(--accent-warm);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(44, 42, 41, 0.08);
     }
 
     .integral-title {
@@ -243,17 +265,18 @@
 
     .mini-badge {
       font-size: 11px;
-      background-color: #e2e8f0;
-      color: #334155;
+      background-color: #F0EAD6;
+      color: var(--text-main);
       padding: 3px 8px;
       border-radius: 4px;
       font-weight: 600;
+      border: 1px solid var(--border-color);
     }
 
     .back-btn {
       background: none;
       border: none;
-      color: #0066cc;
+      color: #8C6A46;
       cursor: pointer;
       font-size: 15px;
       padding: 0;
@@ -264,7 +287,6 @@
   </style>
 </head>
 <body>
-
   <div class="website-container">
     
     <div class="tab-bar">
