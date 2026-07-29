@@ -1597,10 +1597,15 @@
     let activeMonth = null;
     let activeOrder = 'chronological'; // Matches initial active button state in HTML
 
-    // Store original HTML positions when page loads
+    // Store original HTML positions and capture raw LaTeX when page loads
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.integral-bar').forEach((bar, index) => {
         bar.dataset.originalIndex = index;
+
+        // --- NEW SEARCH FIX: Capture raw text before MathJax runs ---
+        const rawText = bar.textContent || bar.innerText || '';
+        const tags = bar.getAttribute('data-tags') || '';
+        bar.setAttribute('data-search', (rawText + ' ' + tags).toLowerCase());
       });
     });
 
@@ -1712,7 +1717,8 @@
 
     // 5. Filter & Sort Processing
     function applyFilters() {
-      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      // Clean up the search query text
+      const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
       const container = document.getElementById('problems-list');
       const problemBars = Array.from(container.querySelectorAll('.integral-bar'));
 
@@ -1739,11 +1745,13 @@
       // Display checks
       problemBars.forEach(bar => {
         const barTags = bar.getAttribute('data-tags').split(' ');
-        const titleText = bar.querySelector('.integral-title').textContent.toLowerCase();
+        
+        // --- NEW SEARCH FIX: Look at the raw data-search attribute instead of the MathJax textContent ---
+        const searchTarget = bar.getAttribute('data-search') || '';
         
         const matchesMethods = Array.from(activeMethods).every(selectedMethod => barTags.includes(selectedMethod));
         const matchesMonth = (activeMonth === null) || barTags.includes(activeMonth);
-        const matchesSearch = titleText.includes(searchQuery);
+        const matchesSearch = (searchQuery === '') || searchTarget.includes(searchQuery);
 
         if (matchesMethods && matchesMonth && matchesSearch) {
           bar.style.display = 'flex';
@@ -1752,6 +1760,6 @@
         }
       });
     }
-  </script>
+</script>
 </body>
 </html>
