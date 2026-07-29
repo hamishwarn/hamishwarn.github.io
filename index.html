@@ -1591,175 +1591,175 @@
     </div>
   </div>
 
-<script>
-    // 1. State tracking for methods, month, and sort order
-    let activeMethods = new Set();
-    let activeMonth = null;
-    let activeOrder = 'chronological'; // Matches initial active button state in HTML
-
-    // Store original HTML positions and capture raw LaTeX when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.integral-bar').forEach((bar, index) => {
-        bar.dataset.originalIndex = index;
-
-        // --- NEW SEARCH FIX: Capture raw text before MathJax runs ---
-        const rawText = bar.textContent || bar.innerText || '';
-        const tags = bar.getAttribute('data-tags') || '';
-        bar.setAttribute('data-search', (rawText + ' ' + tags).toLowerCase());
-      });
-    });
-
-    // Tab Switching Function (About Me / Projects)
-    function openTab(evt, tabName) {
-      document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-      document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
-      
-      document.getElementById(tabName).classList.add('active');
-      if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
-
-      // Shrink back to normal width when switching to About Me or Projects
-      document.querySelector('.website-container').classList.remove('wide-mode');
-    }
-
-    // Section Switcher
-    function showSection(sectionId) {
-      document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(sectionId).classList.add('active');
-      
-      // Expand to wide width when viewing the Integral Module
-      const container = document.querySelector('.website-container');
-      if (sectionId === 'integral-module') {
-        container.classList.add('wide-mode');
-        MathJax.typesetPromise();
-      } else {
-        container.classList.remove('wide-mode');
-      }
-    }
-
-    // 2. Updated Order Switcher (Allows deselecting/toggling off)
-    function setOrder(order, button) {
-      if (activeOrder === order) {
-        // Clicking the currently active order button deselects it
-        activeOrder = null;
-        button.classList.remove('active');
-      } else {
-        // Selecting a new order
-        activeOrder = order;
-        button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
-          btn.classList.remove('active');
+  <script>
+      // 1. State tracking for methods, month, and sort order
+      let activeMethods = new Set();
+      let activeMonth = null;
+      let activeOrder = 'chronological'; // Matches initial active button state in HTML
+  
+      // Store original HTML positions and capture raw LaTeX when page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.integral-bar').forEach((bar, index) => {
+          bar.dataset.originalIndex = index;
+  
+          // --- NEW SEARCH FIX: Capture raw text before MathJax runs ---
+          const rawText = bar.textContent || bar.innerText || '';
+          const tags = bar.getAttribute('data-tags') || '';
+          bar.setAttribute('data-search', (rawText + ' ' + tags).toLowerCase());
         });
-        button.classList.add('active');
-      }
-
-      applyFilters();
-    }
-
-    // 3. Helper: Converts date tags like "jan26" into a sortable number like 2601
-    function getBarDateValue(bar) {
-      const tags = bar.getAttribute('data-tags').toLowerCase().split(' ');
-      const months = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
-      
-      for (let tag of tags) {
-        const match = tag.match(/^([a-z]+)(\d{2})$/);
-        if (match) {
-          const monthStr = match[1].substring(0, 3);
-          if (months[monthStr]) {
-            const year = parseInt(match[2], 10);
-            return year * 100 + months[monthStr];
-          }
-        }
-      }
-      return 0;
-    }
-
-    // 4. Tag Handler (Handles Methods, Months, and 'All' button)
-    function setTag(tag, button) {
-      const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
-
-      if (tag === 'all') {
-        activeMethods.clear();
-        activeMonth = null;
-        document.querySelectorAll('.filter-group:not(:first-child) .tag-btn').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-      } else {
-        if (allBtn) allBtn.classList.remove('active');
-
-        const isMonthTag = button.closest('.filter-group').textContent.includes('Month');
-
-        if (isMonthTag) {
-          if (activeMonth === tag) {
-            activeMonth = null;
-            button.classList.remove('active');
-          } else {
-            activeMonth = tag;
-            button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
-              btn.classList.remove('active');
-            });
-            button.classList.add('active');
-          }
-        } else {
-          if (activeMethods.has(tag)) {
-            activeMethods.delete(tag);
-            button.classList.remove('active');
-          } else {
-            activeMethods.add(tag);
-            button.classList.add('active');
-          }
-        }
-
-        if (activeMethods.size === 0 && activeMonth === null && allBtn) {
-          allBtn.classList.add('active');
-        }
-      }
-      
-      applyFilters();
-    }
-
-    // 5. Filter & Sort Processing
-    function applyFilters() {
-      // Clean up the search query text
-      const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
-      const container = document.getElementById('problems-list');
-      const problemBars = Array.from(container.querySelectorAll('.integral-bar'));
-
-      // Ensure index stamps exist if dynamic loading was used
-      problemBars.forEach((bar, idx) => {
-        if (!bar.dataset.originalIndex) bar.dataset.originalIndex = idx;
       });
-
-      // Sort based on active order or fall back to original HTML position
-      problemBars.sort((a, b) => {
-        if (activeOrder === 'chronological') {
-          return getBarDateValue(a) - getBarDateValue(b);
-        } else if (activeOrder === 'antichronological') {
-          return getBarDateValue(b) - getBarDateValue(a);
-        } else {
-          // Default: Original DOM order
-          return parseInt(a.dataset.originalIndex, 10) - parseInt(b.dataset.originalIndex, 10);
-        }
-      });
-
-      // Re-insert sorted elements
-      problemBars.forEach(bar => container.appendChild(bar));
-
-      // Display checks
-      problemBars.forEach(bar => {
-        const barTags = bar.getAttribute('data-tags').split(' ');
+  
+      // Tab Switching Function (About Me / Projects)
+      function openTab(evt, tabName) {
+        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
         
-        // --- NEW SEARCH FIX: Look at the raw data-search attribute instead of the MathJax textContent ---
-        const searchTarget = bar.getAttribute('data-search') || '';
+        document.getElementById(tabName).classList.add('active');
+        if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+  
+        // Shrink back to normal width when switching to About Me or Projects
+        document.querySelector('.website-container').classList.remove('wide-mode');
+      }
+  
+      // Section Switcher
+      function showSection(sectionId) {
+        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
         
-        const matchesMethods = Array.from(activeMethods).every(selectedMethod => barTags.includes(selectedMethod));
-        const matchesMonth = (activeMonth === null) || barTags.includes(activeMonth);
-        const matchesSearch = (searchQuery === '') || searchTarget.includes(searchQuery);
-
-        if (matchesMethods && matchesMonth && matchesSearch) {
-          bar.style.display = 'flex';
+        // Expand to wide width when viewing the Integral Module
+        const container = document.querySelector('.website-container');
+        if (sectionId === 'integral-module') {
+          container.classList.add('wide-mode');
+          MathJax.typesetPromise();
         } else {
-          bar.style.display = 'none';
+          container.classList.remove('wide-mode');
         }
-      });
-    }
-</script>
+      }
+  
+      // 2. Updated Order Switcher (Allows deselecting/toggling off)
+      function setOrder(order, button) {
+        if (activeOrder === order) {
+          // Clicking the currently active order button deselects it
+          activeOrder = null;
+          button.classList.remove('active');
+        } else {
+          // Selecting a new order
+          activeOrder = order;
+          button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          button.classList.add('active');
+        }
+  
+        applyFilters();
+      }
+  
+      // 3. Helper: Converts date tags like "jan26" into a sortable number like 2601
+      function getBarDateValue(bar) {
+        const tags = bar.getAttribute('data-tags').toLowerCase().split(' ');
+        const months = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+        
+        for (let tag of tags) {
+          const match = tag.match(/^([a-z]+)(\d{2})$/);
+          if (match) {
+            const monthStr = match[1].substring(0, 3);
+            if (months[monthStr]) {
+              const year = parseInt(match[2], 10);
+              return year * 100 + months[monthStr];
+            }
+          }
+        }
+        return 0;
+      }
+  
+      // 4. Tag Handler (Handles Methods, Months, and 'All' button)
+      function setTag(tag, button) {
+        const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
+  
+        if (tag === 'all') {
+          activeMethods.clear();
+          activeMonth = null;
+          document.querySelectorAll('.filter-group:not(:first-child) .tag-btn').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+        } else {
+          if (allBtn) allBtn.classList.remove('active');
+  
+          const isMonthTag = button.closest('.filter-group').textContent.includes('Month');
+  
+          if (isMonthTag) {
+            if (activeMonth === tag) {
+              activeMonth = null;
+              button.classList.remove('active');
+            } else {
+              activeMonth = tag;
+              button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
+                btn.classList.remove('active');
+              });
+              button.classList.add('active');
+            }
+          } else {
+            if (activeMethods.has(tag)) {
+              activeMethods.delete(tag);
+              button.classList.remove('active');
+            } else {
+              activeMethods.add(tag);
+              button.classList.add('active');
+            }
+          }
+  
+          if (activeMethods.size === 0 && activeMonth === null && allBtn) {
+            allBtn.classList.add('active');
+          }
+        }
+        
+        applyFilters();
+      }
+  
+      // 5. Filter & Sort Processing
+      function applyFilters() {
+        // Clean up the search query text
+        const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+        const container = document.getElementById('problems-list');
+        const problemBars = Array.from(container.querySelectorAll('.integral-bar'));
+  
+        // Ensure index stamps exist if dynamic loading was used
+        problemBars.forEach((bar, idx) => {
+          if (!bar.dataset.originalIndex) bar.dataset.originalIndex = idx;
+        });
+  
+        // Sort based on active order or fall back to original HTML position
+        problemBars.sort((a, b) => {
+          if (activeOrder === 'chronological') {
+            return getBarDateValue(a) - getBarDateValue(b);
+          } else if (activeOrder === 'antichronological') {
+            return getBarDateValue(b) - getBarDateValue(a);
+          } else {
+            // Default: Original DOM order
+            return parseInt(a.dataset.originalIndex, 10) - parseInt(b.dataset.originalIndex, 10);
+          }
+        });
+  
+        // Re-insert sorted elements
+        problemBars.forEach(bar => container.appendChild(bar));
+  
+        // Display checks
+        problemBars.forEach(bar => {
+          const barTags = bar.getAttribute('data-tags').split(' ');
+          
+          // --- NEW SEARCH FIX: Look at the raw data-search attribute instead of the MathJax textContent ---
+          const searchTarget = bar.getAttribute('data-search') || '';
+          
+          const matchesMethods = Array.from(activeMethods).every(selectedMethod => barTags.includes(selectedMethod));
+          const matchesMonth = (activeMonth === null) || barTags.includes(activeMonth);
+          const matchesSearch = (searchQuery === '') || searchTarget.includes(searchQuery);
+  
+          if (matchesMethods && matchesMonth && matchesSearch) {
+            bar.style.display = 'flex';
+          } else {
+            bar.style.display = 'none';
+          }
+        });
+      }
+  </script>
 </body>
 </html>
