@@ -29,14 +29,14 @@
 
   <style>
     :root {
-      /* Warm Academic Cream Palette */
-      --bg-main: #FAF6F0;       /* Soft warm cream background */
-      --bg-card: #FFFFFF;       /* Crisp white for problem boxes & paper pages */
-      --text-main: #2C2A29;     /* Deep charcoal text for comfortable reading */
-      --text-muted: #6E6862;    /* Warm gray for minor labels and inactive tabs */
-      --border-color: #E6DCD0;  /* Subtle taupe border */
-      --accent-warm: #C8B8A6;   /* Richer taupe for hover states */
-      --tools-bg: #FAF7F2;      /* Soft ivory for tool containers */
+      
+      --bg-main: #FAF6F0;       /* Background */
+      --bg-card: #FFFFFF;       /* Problem boxes & paper pages */
+      --text-main: #2C2A29;     /* Text */
+      --text-muted: #6E6862;    /* Minor labels and inactive tabs */
+      --border-color: #E6DCD0;  /* Border */
+      --accent-warm: #C8B8A6;   /* Hover states */
+      --tools-bg: #FAF7F2;      /* Tool containers */
     }
 
     body {
@@ -194,13 +194,13 @@
     .tag-btn {
       background-color: var(--bg-card);
       color: var(--text-main);
-      border: 1.5px solid #D4C8BC; /* Increased thickness to 1.5px and darkened slightly for definition */
+      border: 1.5px solid #D4C8BC;
       border-radius: 20px;
       padding: 6px 14px;
       font-size: 13px;
-      font-weight: 500; /* Added slight font weight for crispness */
+      font-weight: 500; 
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(44, 42, 41, 0.04); /* Subtle lift */
+      box-shadow: 0 1px 3px rgba(44, 42, 41, 0.04); 
       transition: all 0.2s ease;
     }
 
@@ -216,7 +216,7 @@
       border-color: var(--text-main);
     }
 
-    /* Thick Integral Problem Bars */
+    /* Integral Problem Bars */
     .integral-bar {
       position: relative;
       background-color: var(--bg-card);
@@ -232,12 +232,13 @@
       transition: background-color 0.2s, transform 0.15s, box-shadow 0.15s;
     }
 
+    /* Extra Difficult  */
     .integral-bar.is-difficult::after {
       content: "★ Extra Difficult";
       position: absolute;
       top: 0;
       right: 0;
-      background-color: #dc2626; /* Vibrant red pops beautifully against cream */
+      background-color: #dc2626;
       color: #ffffff;
       font-size: 11px;
       font-weight: bold;
@@ -1603,14 +1604,14 @@
         document.querySelectorAll('.integral-bar').forEach((bar, index) => {
           bar.dataset.originalIndex = index;
   
-          // --- NEW SEARCH FIX: Capture raw text before MathJax runs ---
+          // --- Capture raw text before MathJax runs ---
           const rawText = bar.textContent || bar.innerText || '';
           const tags = bar.getAttribute('data-tags') || '';
           bar.setAttribute('data-search', (rawText + ' ' + tags).toLowerCase());
         });
       });
   
-      // Tab Switching Function (About Me / Projects)
+      // Tab Switching Function
       function openTab(evt, tabName) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
         document.querySelectorAll('.tab-button').forEach(tab => tab.classList.remove('active'));
@@ -1637,14 +1638,14 @@
         }
       }
   
-      // 2. Updated Order Switcher (Allows deselecting/toggling off)
+      // Order Switcher (Allows deselecting/toggling off)
       function setOrder(order, button) {
         if (activeOrder === order) {
           // Clicking the currently active order button deselects it
           activeOrder = null;
           button.classList.remove('active');
         } else {
-          // Selecting a new order
+          // For selecting a new order
           activeOrder = order;
           button.closest('.tag-container').querySelectorAll('.tag-btn').forEach(btn => {
             btn.classList.remove('active');
@@ -1655,7 +1656,7 @@
         applyFilters();
       }
   
-      // 3. Helper: Converts date tags like "jan26" into a sortable number like 2601
+      // Converts date tags like "jan26" into a sortable number like 2601
       function getBarDateValue(bar) {
         const tags = bar.getAttribute('data-tags').toLowerCase().split(' ');
         const months = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
@@ -1673,7 +1674,7 @@
         return 0;
       }
   
-      // 4. Tag Handler (Handles Methods, Months, and 'All' button)
+      // Tag Handler (Handles Methods, Months, and 'All' button)
       function setTag(tag, button) {
         const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
   
@@ -1716,7 +1717,7 @@
         applyFilters();
       }
   
-      // 5. Filter & Sort Processing
+      // Filter & Sort Processing
       function applyFilters() {
         // Clean up the search query text
         const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
@@ -1747,7 +1748,7 @@
         problemBars.forEach(bar => {
           const barTags = bar.getAttribute('data-tags').split(' ');
           
-          // --- NEW SEARCH FIX: Look at the raw data-search attribute instead of the MathJax textContent ---
+          // Looks at the raw data-search attribute instead of the MathJax textContent ---
           const searchTarget = bar.getAttribute('data-search') || '';
           
           const matchesMethods = Array.from(activeMethods).every(selectedMethod => barTags.includes(selectedMethod));
