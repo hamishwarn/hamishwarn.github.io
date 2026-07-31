@@ -287,6 +287,35 @@
       text-decoration: underline;
       font-weight: bold;
     }
+
+        /* Project Card Styling */
+    .project-card {
+      background-color: #FFFFFF; /* Matches your --bg-card */
+      border: 1px solid #E6DCD0; /* Matches your --border-color */
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(44, 42, 41, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      max-width: 600px; /* Keeps the text highly readable */
+    }
+    
+    .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(44, 42, 41, 0.08);
+    }
+    
+    /* Reusing your mini-badge style from the integral tags */
+    .mini-badge {
+      background-color: #FAF7F2;
+      color: #8C6A46;
+      border: 1px solid #EFEAE2;
+      border-radius: 12px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
   </style>
 </head>
 <body>
@@ -319,10 +348,19 @@
           <p style="margin: 0; color: #555;">A searchable 210+ page document of over a year and a half's worth of solved integrals/sums/products, organized by solution methods and completion dates.
             Many of the problems were solved completely by me, many were solved with hints (see acknowledgements in the full pdf), and many were solved completely by someone else found online.</p>
         </div>
-        <div class="project-card" onclick="showSection('matlabGOL')">
-          <h2 style="margin: 0 0 8px 0; color: #111;">Game of Life</h2>
-          <p style="margin: 0; color: #555;">As part of a course take in my first year of University, I created Conway's Game of Life in MatLab. This section showcases this small project, although it has been
-            translated into JS in order to be viewable properly here.</p>
+          <div class="project-card">
+            <div class="project-content">
+              <h3 style="margin-top: 0; margin-bottom: 10px;">Conway's Game of Life</h3>
+              <div class="tag-container" style="margin-bottom: 15px;">
+                <span class="mini-badge">MATLAB Translation</span>
+                <span class="mini-badge">Cellular Automata</span>
+              </div>
+              <p style="color: #6E6862; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">
+                A zero-player cellular automaton game. I originally wrote the simulation and graphing engine in MATLAB, and completely translated it into an interactive JavaScript canvas featuring 8 historic presets and real-time population tracking.
+              </p>
+              <a href="conway.html" class="tag-btn" style="text-decoration: none; display: inline-block;">View Simulation →</a>
+            </div>
+          </div>
         </div>
       </div>
 
