@@ -246,22 +246,22 @@
     <h1>Conway's Game of Life</h1>
 
     <div id="step-intro" class="wizard-step active">
-      <p>Welcome! This is a browser port of a Conway's Game of Life simulator originally written in MATLAB &mdash;
+      <p>Welcome! This is a browser port of a Conway's Game of Life simulator that I originally wrote in MATLAB,
       complete with a heatmap or image display mode, several classic starting patterns, a live population chart,
       and a custom mode where you can draw your own starting grid by hand.</p>
       <div class="btn-row">
         <button class="btn" id="btn-show-rules">See the rules &amp; background</button>
-        <button class="btn btn-secondary" id="btn-skip-rules">Skip &mdash; go to setup</button>
+        <button class="btn btn-secondary" id="btn-skip-rules">Skip and go to setup</button>
       </div>
     </div>
     
     <div id="step-rules" class="wizard-step rules-box">
       <h2>Background &amp; the four rules</h2>
       <p>Conway's Game of Life is a cellular automaton devised by the British mathematician John Conway in 1970.
-      It is a game with no players &mdash; its evolution is determined entirely by its initial state.</p>
+      It is a game with no players - its evolution is determined entirely by its initial state.</p>
       <p>The game consists of a large grid of cells which can be either live or dead. In this simulation, live
       cells are shown as white pixels, while dead cells are shown as black. Each cell interacts with its eight
-      neighbours &mdash; the cells adjacent to it horizontally, vertically, or diagonally.</p>
+      neighbours, being the cells adjacent to it horizontally, vertically, or diagonally.</p>
       <p><strong>The four rules:</strong></p>
       <ol>
         <li>Any live cell with fewer than two live neighbours dies (underpopulation).</li>
@@ -306,7 +306,7 @@
 
     <div id="step-position" class="wizard-step">
       <h2>Choose a starting position</h2>
-      <p class="hint">Custom mode is only available with the Image display style &mdash; choosing it while Heatmap
+      <p class="hint">Custom mode is only available with the Image display style. Choosing it while Heatmap
       is selected will offer to switch you over.</p>
       <div class="option-grid">
         <div class="option-card" data-pos="1"><h3>1. Custom</h3><p>Draw your own pattern by hand (Image mode only).</p></div>
@@ -345,10 +345,6 @@
         <canvas id="editor-canvas" class="pixel-canvas" width="640" height="640"></canvas>
       </div>
       <div class="editor-toolbar">
-        <div class="mode-toggle" id="mode-toggle">
-          <button data-mode="pan" class="active">Pan</button>
-          <button data-mode="draw">Draw</button>
-        </div>
         <button class="btn btn-secondary" id="btn-zoom-in">Zoom in</button>
         <button class="btn btn-secondary" id="btn-zoom-out">Zoom out</button>
         <button class="btn btn-secondary" id="btn-zoom-reset">Reset view</button>
