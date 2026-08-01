@@ -1107,6 +1107,8 @@
     }
   });
 
+  $('btn-editor-back').addEventListener('click', () => showStep('step-position'));
+
   /* ---- Finished ---- */
   function finishSimulation(finalGrid) {
     state.running = false;
@@ -1129,7 +1131,7 @@
     octx.putImageData(imgData, 0, 0);
     $('download-final').href = off.toDataURL('image/png');
   }
-
+  $('btn-editor-back').addEventListener('click', () => showStep('step-position'));
   $('btn-restart').addEventListener('click', () => {
     clearTimeout(state.timer);
     state.running = false;
