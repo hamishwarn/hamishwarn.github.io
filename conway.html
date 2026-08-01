@@ -251,7 +251,7 @@
       and a custom mode where you can draw your own starting grid by hand!</p>
       <div class="btn-row">
         <button class="btn" id="btn-show-rules">See the rules &amp; background</button>
-        <button class="btn btn-secondary" id="btn-skip-rules">Skip &mdash; go to setup</button>
+        <button class="btn btn-secondary" id="btn-skip-rules">Skip and go to setup</button>
       </div>
     </div>
 
@@ -285,7 +285,7 @@
             <button class="choice-btn selected" data-display="Image">Image</button>
             <button class="choice-btn" data-display="Heatmap">Heatmap</button>
           </div>
-          <div class="hint">Image is a plain pixel grid; Heatmap draws cell gridlines when zoomed in.</div>
+          <div class="hint">Image is a plain pixel grid, Heatmap draws cell gridlines when zoomed in.</div>
         </div>
         <div class="field-group">
           <label for="input-size">Grid size (cells per side, minimum 50)</label>
@@ -323,23 +323,13 @@
       </div>
     </div>
 
-    <div id="step-conflict" class="wizard-step">
-      <h2>Custom mode needs Image display</h2>
-      <p>Custom mode isn't supported in Heatmap format. Would you like to switch over to Image format and
-      continue into custom mode, or return to the choice menu?</p>
-      <div class="btn-row">
-        <button class="btn" id="btn-conflict-continue">Switch to Image &amp; continue</button>
-        <button class="btn btn-secondary" id="btn-conflict-return">Return to choice menu</button>
-      </div>
-    </div>
+    
 
     <div id="step-editor" class="wizard-step">
       <h2>Custom mode</h2>
       <div class="instructions">
-        <strong>Desktop:</strong> shift + left-click to toggle a cell &middot; left-click and drag to pan &middot;
-        scroll to zoom &middot; right-click when you're done.<br>
-        <strong>Touch:</strong> use the Pan/Draw switch below, drag with one finger, pinch to zoom, tap to toggle
-        a cell while in Draw mode.
+        <strong>Desktop:</strong> shift + left-click to toggle a cell, left-click and drag to pan &middot;
+        scroll to zoom, right-click when you're done.<br>
       </div>
       <div class="canvas-wrap">
         <canvas id="editor-canvas" class="pixel-canvas" width="640" height="640"></canvas>
@@ -949,14 +939,6 @@
   $('btn-position-back').addEventListener('click', () => showStep('step-setup'));
 
   function handlePositionChoice(pos) {
-    if (pos === 1) {
-      if (state.displayType === 'Heatmap') {
-        showStep('step-conflict');
-      } else {
-        openEditor();
-      }
-      return;
-    }
     let grid;
     switch (pos) {
       case 2: grid = patternRandom(state.screenSize); break;
