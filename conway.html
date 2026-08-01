@@ -1106,7 +1106,13 @@
       state.tickFn();
     }
   });
-
+  document.querySelectorAll('#mode-toggle button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mode-toggle button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (state.editor) state.editor.mode = btn.getAttribute('data-mode');
+    });
+  });
   $('btn-editor-back').addEventListener('click', () => showStep('step-position'));
 
   /* ---- Finished ---- */
@@ -1131,6 +1137,13 @@
     octx.putImageData(imgData, 0, 0);
     $('download-final').href = off.toDataURL('image/png');
   }
+    document.querySelectorAll('#mode-toggle button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#mode-toggle button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (state.editor) state.editor.mode = btn.getAttribute('data-mode');
+    });
+  });
   $('btn-editor-back').addEventListener('click', () => showStep('step-position'));
   $('btn-restart').addEventListener('click', () => {
     clearTimeout(state.timer);
