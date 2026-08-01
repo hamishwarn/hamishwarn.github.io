@@ -385,7 +385,9 @@
           </div>
         </div>
       </div>
+
       <div class="editor-toolbar">
+        <button class="btn btn-secondary" id="btn-sim-back">Back to choices</button>
         <button class="btn" id="btn-sim-pauseplay">Pause</button>
         <div class="slider-row" style="flex:1 1 220px;">
           <span class="hint" style="white-space:nowrap;">Speed</span>
@@ -402,6 +404,7 @@
       </div>
       <div class="btn-row">
         <a class="download-link" id="download-final" href="#" download="FinishedImage.png">Download final image (PNG)</a>
+        <button class="btn btn-secondary" id="btn-done-back">Back to choices</button>
         <button class="btn btn-secondary" id="btn-restart">Start over</button>
       </div>
     </div>
@@ -1103,6 +1106,20 @@
     }
   });
 
+/* ---- Return to Choices Handlers ---- */
+  
+  // When running the simulation, this stops the timer and returns to the menu
+  $('btn-sim-back').addEventListener('click', () => {
+    state.running = false;
+    clearTimeout(state.timer);
+    showStep('step-position');
+  });
+
+  // When finished, this simply returns to the menu
+  $('btn-done-back').addEventListener('click', () => {
+    showStep('step-position');
+  });
+  
   /* ---- Finished ---- */
   function finishSimulation(finalGrid) {
     state.running = false;
