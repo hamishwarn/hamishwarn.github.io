@@ -30,6 +30,17 @@
   .website-container {
     width: 100%;
     max-width: 900px;
+    transition: max-width 0.35s ease-in-out;
+  }
+
+  
+  .website-container.wide-mode {
+    max-width: 1400px; 
+  }
+
+  .website-container.wide-mode canvas.pixel-canvas,
+  .website-container.wide-mode canvas.chart-canvas {
+    max-width: 640px; 
   }
 
   .paper-page {
@@ -922,10 +933,18 @@
   function $(id) { return document.getElementById(id); }
 
   function showStep(id) {
-    document.querySelectorAll('.wizard-step').forEach((el) => el.classList.remove('active'));
-    $(id).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+      document.querySelectorAll('.wizard-step').forEach((el) => el.classList.remove('active'));
+      $(id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Dynamically expand the page only for the simulation screen
+      const container = document.querySelector('.website-container');
+      if (id === 'step-sim') {
+        container.classList.add('wide-mode');
+      } else {
+        container.classList.remove('wide-mode');
+      }
+    }
 
   /* ---- Intro / rules ---- */
   $('btn-show-rules').addEventListener('click', () => showStep('step-rules'));
