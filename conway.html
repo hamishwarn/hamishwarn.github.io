@@ -245,25 +245,23 @@
   <div class="paper-page">
     <h1>Conway's Game of Life</h1>
 
-    <!-- STEP: INTRO -->
     <div id="step-intro" class="wizard-step active">
-      <p>Welcome! This is a browser port of a Conway's Game of Life simulator originally written in MATLAB &mdash;
+      <p>Welcome! This is a browser port of a Conway's Game of Life simulator that I originally wrote in MATLAB, 
       complete with a heatmap or image display mode, several classic starting patterns, a live population chart,
-      and a custom mode where you can draw your own starting grid by hand.</p>
+      and a custom mode where you can draw your own starting grid by hand!</p>
       <div class="btn-row">
         <button class="btn" id="btn-show-rules">See the rules &amp; background</button>
-        <button class="btn btn-secondary" id="btn-skip-rules">Skip &mdash; go to setup</button>
+        <button class="btn btn-secondary" id="btn-skip-rules">Skip and go to setup</button>
       </div>
     </div>
 
-    <!-- STEP: RULES -->
     <div id="step-rules" class="wizard-step rules-box">
       <h2>Background &amp; the four rules</h2>
       <p>Conway's Game of Life is a cellular automaton devised by the British mathematician John Conway in 1970.
-      It is a game with no players &mdash; its evolution is determined entirely by its initial state.</p>
+      It is a game with no players - its evolution is determined entirely by its initial state.</p>
       <p>The game consists of a large grid of cells which can be either live or dead. In this simulation, live
       cells are shown as white pixels, while dead cells are shown as black. Each cell interacts with its eight
-      neighbours &mdash; the cells adjacent to it horizontally, vertically, or diagonally.</p>
+      neighbours, being the cells adjacent to it horizontally, vertically, or diagonally.</p>
       <p><strong>The four rules:</strong></p>
       <ol>
         <li>Any live cell with fewer than two live neighbours dies (underpopulation).</li>
@@ -278,7 +276,6 @@
       </div>
     </div>
 
-    <!-- STEP: SETUP -->
     <div id="step-setup" class="wizard-step">
       <h2>Set up your simulation</h2>
       <div class="tools-container">
@@ -306,11 +303,10 @@
         <button class="btn" id="btn-setup-continue">Continue</button>
       </div>
     </div>
-
-    <!-- STEP: POSITION CHOICE -->
+    
     <div id="step-position" class="wizard-step">
       <h2>Choose a starting position</h2>
-      <p class="hint">Custom mode is only available with the Image display style &mdash; choosing it while Heatmap
+      <p class="hint">Custom mode is only available with the Image display style. Choosing it while Heatmap
       is selected will offer to switch you over.</p>
       <div class="option-grid">
         <div class="option-card" data-pos="1"><h3>1. Custom</h3><p>Draw your own pattern by hand (Image mode only).</p></div>
@@ -327,7 +323,6 @@
       </div>
     </div>
 
-    <!-- STEP: HEATMAP + CUSTOM CONFLICT -->
     <div id="step-conflict" class="wizard-step">
       <h2>Custom mode needs Image display</h2>
       <p>Custom mode isn't supported in Heatmap format. Would you like to switch over to Image format and
@@ -338,12 +333,11 @@
       </div>
     </div>
 
-    <!-- STEP: CUSTOM EDITOR -->
     <div id="step-editor" class="wizard-step">
       <h2>Custom mode</h2>
       <div class="instructions">
-        <strong>Desktop:</strong> shift + left-click to toggle a cell &middot; left-click and drag to pan &middot;
-        scroll to zoom &middot; right-click when you're done.<br>
+        <strong>Desktop:</strong> shift + left-click to toggle a cell, left-click and drag to pan,
+        scroll to zoom, right-click when you're done.<br>
         <strong>Touch:</strong> use the Pan/Draw switch below, drag with one finger, pinch to zoom, tap to toggle
         a cell while in Draw mode.
       </div>
@@ -351,23 +345,15 @@
         <canvas id="editor-canvas" class="pixel-canvas" width="640" height="640"></canvas>
       </div>
       <div class="editor-toolbar">
-        <div class="mode-toggle" id="mode-toggle">
-          <button data-mode="pan" class="active">Pan</button>
-          <button data-mode="draw">Draw</button>
-        </div>
-        <button class="btn btn-secondary" id="btn-zoom-in">Zoom in</button>
-        <button class="btn btn-secondary" id="btn-zoom-out">Zoom out</button>
         <button class="btn btn-secondary" id="btn-zoom-reset">Reset view</button>
         <button class="btn btn-secondary" id="btn-clear-grid">Clear all</button>
         <div class="spacer"></div>
-        <button class="btn" id="btn-editor-finish">Finish custom pattern</button>
       </div>
       <div class="btn-row">
         <button class="btn btn-secondary" id="btn-editor-back">Back to choices</button>
       </div>
     </div>
 
-    <!-- STEP: PREVIEW -->
     <div id="step-preview" class="wizard-step">
       <h2>Starting pattern</h2>
       <div class="canvas-wrap">
@@ -379,7 +365,6 @@
       </div>
     </div>
 
-    <!-- STEP: SIMULATION -->
     <div id="step-sim" class="wizard-step">
       <h2>The Game of Life</h2>
       <div class="stat-row">
@@ -407,7 +392,6 @@
       </div>
     </div>
 
-    <!-- STEP: DONE -->
     <div id="step-done" class="wizard-step">
       <h2>Finished!</h2>
       <p id="done-summary"></p>
@@ -427,6 +411,7 @@
 (function () {
   "use strict";
 
+  /* THIS CODE WAS AI-WRITTEN TO BE A FAITHFUL TRANSLATION OF MY ORIGINAL MATLAB CODE INTO JS/HTML
   /* ============================= Grid helpers ============================= */
 
   function makeGrid(size) {
