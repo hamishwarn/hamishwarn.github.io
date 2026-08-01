@@ -245,25 +245,23 @@
   <div class="paper-page">
     <h1>Conway's Game of Life</h1>
 
-    <!-- STEP: INTRO -->
     <div id="step-intro" class="wizard-step active">
-      <p>Welcome! This is a browser port of a Conway's Game of Life simulator originally written in MATLAB &mdash;
+      <p>Welcome! This is a browser port of a Conway's Game of Life simulator that I originally wrote in MATLAB,
       complete with a heatmap or image display mode, several classic starting patterns, a live population chart,
-      and a custom mode where you can draw your own starting grid by hand.</p>
+      and a custom mode where you can draw your own starting grid by hand!</p>
       <div class="btn-row">
         <button class="btn" id="btn-show-rules">See the rules &amp; background</button>
         <button class="btn btn-secondary" id="btn-skip-rules">Skip &mdash; go to setup</button>
       </div>
     </div>
 
-    <!-- STEP: RULES -->
     <div id="step-rules" class="wizard-step rules-box">
       <h2>Background &amp; the four rules</h2>
       <p>Conway's Game of Life is a cellular automaton devised by the British mathematician John Conway in 1970.
-      It is a game with no players &mdash; its evolution is determined entirely by its initial state.</p>
+      It is a game with no players - its evolution is determined entirely by its initial state.</p>
       <p>The game consists of a large grid of cells which can be either live or dead. In this simulation, live
       cells are shown as white pixels, while dead cells are shown as black. Each cell interacts with its eight
-      neighbours &mdash; the cells adjacent to it horizontally, vertically, or diagonally.</p>
+      neighbours, being the cells adjacent to it horizontally, vertically, or diagonally.</p>
       <p><strong>The four rules:</strong></p>
       <ol>
         <li>Any live cell with fewer than two live neighbours dies (underpopulation).</li>
@@ -278,7 +276,6 @@
       </div>
     </div>
 
-    <!-- STEP: SETUP -->
     <div id="step-setup" class="wizard-step">
       <h2>Set up your simulation</h2>
       <div class="tools-container">
@@ -307,10 +304,9 @@
       </div>
     </div>
 
-    <!-- STEP: POSITION CHOICE -->
     <div id="step-position" class="wizard-step">
       <h2>Choose a starting position</h2>
-      <p class="hint">Custom mode is only available with the Image display style &mdash; choosing it while Heatmap
+      <p class="hint">Custom mode is only available with the Image display style. Choosing it while Heatmap
       is selected will offer to switch you over.</p>
       <div class="option-grid">
         <div class="option-card" data-pos="1"><h3>1. Custom</h3><p>Draw your own pattern by hand (Image mode only).</p></div>
@@ -327,7 +323,6 @@
       </div>
     </div>
 
-    <!-- STEP: HEATMAP + CUSTOM CONFLICT -->
     <div id="step-conflict" class="wizard-step">
       <h2>Custom mode needs Image display</h2>
       <p>Custom mode isn't supported in Heatmap format. Would you like to switch over to Image format and
@@ -338,7 +333,6 @@
       </div>
     </div>
 
-    <!-- STEP: CUSTOM EDITOR -->
     <div id="step-editor" class="wizard-step">
       <h2>Custom mode</h2>
       <div class="instructions">
@@ -351,12 +345,6 @@
         <canvas id="editor-canvas" class="pixel-canvas" width="640" height="640"></canvas>
       </div>
       <div class="editor-toolbar">
-        <div class="mode-toggle" id="mode-toggle">
-          <button data-mode="pan" class="active">Pan</button>
-          <button data-mode="draw">Draw</button>
-        </div>
-        <button class="btn btn-secondary" id="btn-zoom-in">Zoom in</button>
-        <button class="btn btn-secondary" id="btn-zoom-out">Zoom out</button>
         <button class="btn btn-secondary" id="btn-zoom-reset">Reset view</button>
         <button class="btn btn-secondary" id="btn-clear-grid">Clear all</button>
         <div class="spacer"></div>
@@ -367,7 +355,6 @@
       </div>
     </div>
 
-    <!-- STEP: PREVIEW -->
     <div id="step-preview" class="wizard-step">
       <h2>Starting pattern</h2>
       <div class="canvas-wrap">
@@ -379,7 +366,7 @@
       </div>
     </div>
 
-    <!-- STEP: SIMULATION -->
+    
     <div id="step-sim" class="wizard-step">
       <h2>The Game of Life</h2>
       <div class="stat-row">
@@ -407,7 +394,7 @@
       </div>
     </div>
 
-    <!-- STEP: DONE -->
+
     <div id="step-done" class="wizard-step">
       <h2>Finished!</h2>
       <p id="done-summary"></p>
@@ -427,21 +414,16 @@
 (function () {
   "use strict";
 
-  /* ============================= Grid helpers ============================= */
 
   function makeGrid(size) {
     return new Uint8Array(size * size);
   }
 
-  // Mirrors MATLAB 1-indexed assignment A(r,c) = 1, with bounds clipping
-  // (MATLAB would auto-grow the matrix; here we simply clip out-of-range
-  // writes so very small grids degrade gracefully instead of crashing).
   function setCell1(A, size, r, c) {
     if (r < 1 || r > size || c < 1 || c > size) return;
     A[(r - 1) * size + (c - 1)] = 1;
   }
 
-  // Mirrors MATLAB A(r1:r1+rows-1, c1:c1+cols-1) = matrix
   function setBlock1(A, size, r1, c1, matrix) {
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
@@ -543,9 +525,6 @@
     return A;
   }
 
-  // One generation step. Border cells (row/col 0 and size-1) are never
-  // recomputed, matching the original MATLAB loop which only updates
-  // rows/cols 2:end-1 -- the border simply carries over unchanged.
   function stepGeneration(prev, size) {
     const next = prev.slice();
     for (let r = 1; r <= size - 2; r++) {
@@ -581,9 +560,6 @@
       A[r * size + (size - 1)] = 0;
     }
   }
-
-  /* ============================= Static renderer ============================= */
-  // Used for the read-only preview / simulation / finished views.
 
   function createGridRenderer(canvas, size, heatmapStyle) {
     const off = document.createElement('canvas');
@@ -626,8 +602,6 @@
       }
     };
   }
-
-  /* ============================= Population chart ============================= */
 
   function drawPopulationChart(canvas, popArray) {
     const ctx = canvas.getContext('2d');
@@ -672,9 +646,7 @@
     }
     ctx.stroke();
   }
-
-  /* ============================= Interactive editor canvas ============================= */
-
+  
   function EditorCanvas(canvas, size) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -910,8 +882,6 @@
     });
   };
 
-  /* ============================= Wizard / app state ============================= */
-
   const state = {
     displayType: 'Image',
     screenSize: 70,
@@ -937,12 +907,10 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  /* ---- Intro / rules ---- */
   $('btn-show-rules').addEventListener('click', () => showStep('step-rules'));
   $('btn-skip-rules').addEventListener('click', () => showStep('step-setup'));
   $('btn-rules-continue').addEventListener('click', () => showStep('step-setup'));
 
-  /* ---- Setup ---- */
   document.querySelectorAll('#step-setup .choice-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#step-setup .choice-btn').forEach((b) => b.classList.remove('selected'));
@@ -971,7 +939,6 @@
     showStep('step-position');
   });
 
-  /* ---- Position choice ---- */
   document.querySelectorAll('#step-position .option-card').forEach((card) => {
     card.addEventListener('click', () => {
       const pos = parseInt(card.getAttribute('data-pos'), 10);
@@ -1005,7 +972,6 @@
     openPreview();
   }
 
-  /* ---- Heatmap/custom conflict ---- */
   $('btn-conflict-continue').addEventListener('click', () => {
     state.displayType = 'Image';
     document.querySelectorAll('#step-setup .choice-btn').forEach((b) => {
@@ -1015,12 +981,11 @@
   });
   $('btn-conflict-return').addEventListener('click', () => showStep('step-position'));
 
-  /* ---- Custom editor ---- */
   function openEditor() {
     showStep('step-editor');
     const canvas = $('editor-canvas');
     if (state.editor) {
-      // rebuild if grid size changed since last time
+      // rebuilds if grid size changed since last time
       if (state.editor.size !== state.screenSize) {
         state.editor = null;
       }
@@ -1051,7 +1016,6 @@
     openPreview();
   }
 
-  /* ---- Preview ---- */
   function openPreview() {
     showStep('step-preview');
     const canvas = $('preview-canvas');
@@ -1061,7 +1025,6 @@
   $('btn-preview-back').addEventListener('click', () => showStep('step-position'));
   $('btn-preview-start').addEventListener('click', startSimulation);
 
-  /* ---- Simulation ---- */
   function startSimulation() {
     showStep('step-sim');
     state.currentGen = 0;
@@ -1116,7 +1079,7 @@
     }
   });
 
-  /* ---- Finished ---- */
+  /* Finished */
   function finishSimulation(finalGrid) {
     state.running = false;
     showStep('step-done');
