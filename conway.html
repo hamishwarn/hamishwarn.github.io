@@ -33,14 +33,16 @@
     transition: max-width 0.35s ease-in-out;
   }
 
-  
   .website-container.wide-mode {
     max-width: 1200px; 
   }
-
-  .website-container.wide-mode canvas.pixel-canvas,
-  .website-container.wide-mode canvas.chart-canvas {
+  
+  .website-container.wide-mode canvas.pixel-canvas {
     max-width: 640px; 
+  }
+
+  .website-container.wide-mode canvas.chart-canvas {
+    max-width: 450px; 
   }
 
   .paper-page {
@@ -643,19 +645,35 @@
     ctx.strokeRect(padL, padT, plotW, plotH);
     ctx.fillStyle = '#6E6862';
     ctx.font = '13px Segoe UI, sans-serif';
+    
     if (popArray.length === 0) {
       ctx.textAlign = 'center';
       ctx.fillText('Population will appear here', padL + plotW / 2, padT + plotH / 2);
       return;
     }
+    
     const maxPop = Math.max.apply(null, popArray) || 1;
     const n = popArray.length;
+    const maxGen = Math.max(0, n - 1);
+    
+    // Y-axis labels (Population) - Draw 5 intervals (0%, 25%, 50%, 75%, 100%)
     ctx.textAlign = 'right';
-    ctx.fillText(String(maxPop), padL - 8, padT + 10);
-    ctx.fillText('0', padL - 8, padT + plotH);
+    for (let i = 0; i <= 4; i++) {
+      const popVal = Math.round(maxPop * (i / 4));
+      const yPos = padT + plotH - (plotH * (i / 4));
+      // The +4 shifts the text down slightly so it visually centers on the invisible tick mark
+      ctx.fillText(String(popVal), padL - 8, yPos + 4); 
+    }
+
+    // X-axis labels (Generation) - Draw 5 intervals
     ctx.textAlign = 'center';
-    ctx.fillText('0', padL, padT + plotH + 18);
-    ctx.fillText(String(n - 1), padL + plotW, padT + plotH + 18);
+    for (let i = 0; i <= 4; i++) {
+      const genVal = Math.round(maxGen * (i / 4));
+      const xPos = padL + (plotW * (i / 4));
+      ctx.fillText(String(genVal), xPos, padT + plotH + 18);
+    }
+
+    // Axis titles
     ctx.fillText('Generation', padL + plotW / 2, h - 8);
     ctx.save();
     ctx.translate(16, padT + plotH / 2);
@@ -663,6 +681,8 @@
     ctx.textAlign = 'center';
     ctx.fillText('Population', 0, 0);
     ctx.restore();
+    
+    // Draw the actual population line
     ctx.strokeStyle = '#8C6A46';
     ctx.lineWidth = 2;
     ctx.beginPath();
