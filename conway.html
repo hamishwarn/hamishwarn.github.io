@@ -245,7 +245,6 @@
   <div class="paper-page">
     <h1>Conway's Game of Life</h1>
 
-    <!-- STEP: INTRO -->
     <div id="step-intro" class="wizard-step active">
       <p>Welcome! This is a browser port of a Conway's Game of Life simulator originally written in MATLAB &mdash;
       complete with a heatmap or image display mode, several classic starting patterns, a live population chart,
@@ -255,8 +254,7 @@
         <button class="btn btn-secondary" id="btn-skip-rules">Skip &mdash; go to setup</button>
       </div>
     </div>
-
-    <!-- STEP: RULES -->
+    
     <div id="step-rules" class="wizard-step rules-box">
       <h2>Background &amp; the four rules</h2>
       <p>Conway's Game of Life is a cellular automaton devised by the British mathematician John Conway in 1970.
@@ -278,7 +276,6 @@
       </div>
     </div>
 
-    <!-- STEP: SETUP -->
     <div id="step-setup" class="wizard-step">
       <h2>Set up your simulation</h2>
       <div class="tools-container">
@@ -307,7 +304,6 @@
       </div>
     </div>
 
-    <!-- STEP: POSITION CHOICE -->
     <div id="step-position" class="wizard-step">
       <h2>Choose a starting position</h2>
       <p class="hint">Custom mode is only available with the Image display style &mdash; choosing it while Heatmap
@@ -327,7 +323,6 @@
       </div>
     </div>
 
-    <!-- STEP: HEATMAP + CUSTOM CONFLICT -->
     <div id="step-conflict" class="wizard-step">
       <h2>Custom mode needs Image display</h2>
       <p>Custom mode isn't supported in Heatmap format. Would you like to switch over to Image format and
@@ -338,7 +333,6 @@
       </div>
     </div>
 
-    <!-- STEP: CUSTOM EDITOR -->
     <div id="step-editor" class="wizard-step">
       <h2>Custom mode</h2>
       <div class="instructions">
@@ -367,7 +361,6 @@
       </div>
     </div>
 
-    <!-- STEP: PREVIEW -->
     <div id="step-preview" class="wizard-step">
       <h2>Starting pattern</h2>
       <div class="canvas-wrap">
@@ -379,7 +372,6 @@
       </div>
     </div>
 
-    <!-- STEP: SIMULATION -->
     <div id="step-sim" class="wizard-step">
       <h2>The Game of Life</h2>
       <div class="stat-row">
@@ -406,8 +398,7 @@
         </div>
       </div>
     </div>
-
-    <!-- STEP: DONE -->
+    
     <div id="step-done" class="wizard-step">
       <h2>Finished!</h2>
       <p id="done-summary"></p>
@@ -427,6 +418,7 @@
 (function () {
   "use strict";
 
+  /* THIS IS AI GENERATED TO BE A FAITHFUL TRANSLATION OF MY ORIGINAL MATLAB CODE
   /* ============================= Grid helpers ============================= */
 
   function makeGrid(size) {
