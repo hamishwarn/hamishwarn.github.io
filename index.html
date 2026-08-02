@@ -1602,17 +1602,17 @@
   </div>
 
   <script>
-      // 1. State tracking for methods, month, and sort order
+      // State tracking for methods, month, and sort order
       let activeMethods = new Set();
       let activeMonth = null;
       let activeOrder = 'chronological'; // Matches initial active button state in HTML
   
-      // Store original HTML positions and capture raw LaTeX when page loads
+      // Stores original HTML positions and captures raw LaTeX
       document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.integral-bar').forEach((bar, index) => {
           bar.dataset.originalIndex = index;
   
-          // --- Capture raw text before MathJax runs ---
+          // Capture raw text before MathJax runs
           const rawText = bar.textContent || bar.innerText || '';
           const tags = bar.getAttribute('data-tags') || '';
           bar.setAttribute('data-search', (rawText + ' ' + tags).toLowerCase());
@@ -1631,7 +1631,7 @@
         document.querySelector('.website-container').classList.remove('wide-mode');
       }
   
-      // Section Switcher
+      // Section Switching
       function showSection(sectionId) {
         document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
         document.getElementById(sectionId).classList.add('active');
@@ -1646,7 +1646,7 @@
         }
       }
   
-      // Order Switcher (Allows deselecting/toggling off)
+      // Order Switcher
       function setOrder(order, button) {
         if (activeOrder === order) {
           // Clicking the currently active order button deselects it
@@ -1664,7 +1664,7 @@
         applyFilters();
       }
   
-      // Converts date tags like "jan26" into a sortable number like 2601
+      // Converts date tags like "jan26" into a sortable number
       function getBarDateValue(bar) {
         const tags = bar.getAttribute('data-tags').toLowerCase().split(' ');
         const months = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
@@ -1682,7 +1682,7 @@
         return 0;
       }
   
-      // Tag Handler (Handles Methods, Months, and 'All' button)
+      // Tag Handler
       function setTag(tag, button) {
         const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
   
@@ -1725,7 +1725,7 @@
         applyFilters();
       }
   
-      // Filter & Sort Processing
+      // Filter and Sort Processings
       function applyFilters() {
         // Clean up the search query text
         const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
@@ -1756,7 +1756,7 @@
         problemBars.forEach(bar => {
           const barTags = bar.getAttribute('data-tags').split(' ');
           
-          // Looks at the raw data-search attribute instead of the MathJax textContent ---
+          // Looks at the raw data-search attribute instead of the MathJax textContent
           const searchTarget = bar.getAttribute('data-search') || '';
           
           const matchesMethods = Array.from(activeMethods).every(selectedMethod => barTags.includes(selectedMethod));
