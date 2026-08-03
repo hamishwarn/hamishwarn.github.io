@@ -1731,20 +1731,30 @@
         const container = document.getElementById('problems-list');
         const problemBars = Array.from(container.querySelectorAll('.integral-bar'));
   
-        // Ensure index stamps exist if dynamic loading was used
-        problemBars.forEach((bar, idx) => {
-          if (!bar.dataset.originalIndex) bar.dataset.originalIndex = idx;
-        });
-  
         // Sort based on active order or fall back to original HTML position
         problemBars.sort((a, b) => {
+          const dateA = getBarDateValue(a);
+          const dateB = getBarDateValue(b);
+          const indexA = parseInt(a.dataset.originalIndex, 10);
+          const indexB = parseInt(b.dataset.originalIndex, 10);
+
           if (activeOrder === 'chronological') {
-            return getBarDateValue(a) - getBarDateValue(b);
+            if (dateA !== dateB) {
+              return dateA - dateB; // Older months first
+            }
+            // Tie-breaker: keep original HTML order within the same month
+            return indexA - indexB; 
+            
           } else if (activeOrder === 'antichronological') {
-            return getBarDateValue(b) - getBarDateValue(a);
+            if (dateA !== dateB) {
+              return dateB - dateA; // Newer months first
+            }
+            // Tie-breaker: reverse original HTML order within the same month
+            return indexB - indexA; 
+            
           } else {
             // Default: Original DOM order
-            return parseInt(a.dataset.originalIndex, 10) - parseInt(b.dataset.originalIndex, 10);
+            return indexA - indexB;
           }
         });
   
