@@ -232,7 +232,7 @@
       transition: background-color 0.2s, transform 0.15s, box-shadow 0.15s;
     }
 
-    /* Extra Difficult  */
+    /* Extra Difficult */
     .integral-bar.is-difficult::after {
       content: "★ Extra Difficult";
       position: absolute;
@@ -1681,20 +1681,25 @@
         return 0;
       }
   
-      // Tag Handler
+            // Tag Handler
       function setTag(tag, button) {
         const allBtn = document.querySelector('.tag-btn[onclick*="all"]');
-  
+      
         if (tag === 'all') {
           activeMethods.clear();
           activeMonth = null;
-          document.querySelectorAll('.filter-group:not(:first-child) .tag-btn').forEach(btn => btn.classList.remove('active'));
+      
+          // Remove 'active' class only from method and month filter buttons
+          document.querySelectorAll('.tag-btn[onclick*="setTag"]').forEach(btn => {
+            btn.classList.remove('active');
+          });
+      
           button.classList.add('active');
         } else {
           if (allBtn) allBtn.classList.remove('active');
-  
+      
           const isMonthTag = button.closest('.filter-group').textContent.includes('Month');
-  
+      
           if (isMonthTag) {
             if (activeMonth === tag) {
               activeMonth = null;
@@ -1715,12 +1720,12 @@
               button.classList.add('active');
             }
           }
-  
+      
           if (activeMethods.size === 0 && activeMonth === null && allBtn) {
             allBtn.classList.add('active');
           }
         }
-        
+      
         applyFilters();
       }
   
