@@ -329,7 +329,7 @@
               <button class="tag-btn" onclick="setTag('gammabeta', this)">Gamma/Beta</button>
               <button class="tag-btn" onclick="setTag('realimag', this)">Real/Imag</button>
               <button class="tag-btn" onclick="setTag('piece', this)">Floor/Ceiling/Frac</button>
-              <button class="tag-btn" onclick="setTag('polar', this)">Polar Form</button>
+              <button class="tag-btn" onclick="setTag('polar', this)">Polar Coords</button>
               <button class="tag-btn" onclick="setTag('lambertW', this)">Lambert W</button>
               <button class="tag-btn" onclick="setTag('cauchy', this)">Cauchy Integral Formula</button>
               <button class="tag-btn" onclick="setTag('contour', this)">Contour Integration</button>
@@ -611,7 +611,7 @@
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
-                <span class="mini-badge">Polar Form</span>
+                <span class="mini-badge">Polar Coords</span>
                 <span class="mini-badge">Real/Imag</span>
                 <span class="mini-badge">U-Sub</span>
               </div>
@@ -729,12 +729,14 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS parts usub may25" onclick="window.open('My_Integral_Compilation.pdf#page=61', '_blank')">
+          <div class="integral-bar" data-tags="gammabeta kings DUIS parts usub may25" onclick="window.open('My_Integral_Compilation.pdf#page=61', '_blank')">
             <div class="integral-title">
              \[\int_{a}^{a+1}\ln\Gamma(x)\,dx\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
+                <span class="mini-badge">Gamma/Beta</span>
+                <span class="mini-badge">King's Rule</span>
                 <span class="mini-badge">DUIS</span>
                 <span class="mini-badge">IBP</span>
                 <span class="mini-badge">U-Sub</span>
@@ -1201,13 +1203,14 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="RMT nov25" onclick="window.open('My_Integral_Compilation.pdf#page=123', '_blank')">
+          <div class="integral-bar" data-tags="RMT series nov25" onclick="window.open('My_Integral_Compilation.pdf#page=123', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{\infty}x^pe^{-kx^q}\,dx\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
                 <span class="mini-badge">Ramanujan’s Master Theorem</span>
+                <span class="mini-badge">Series Expansion</span>
               </div>
               <div class="meta-date"><span class="mini-badge">Nov 2025</span></div>
             </div>
@@ -1237,26 +1240,28 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="other usub nov25" onclick="window.open('My_Integral_Compilation.pdf#page=126', '_blank')">
+          <div class="integral-bar" data-tags="other RMT usub nov25" onclick="window.open('My_Integral_Compilation.pdf#page=126', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{\frac{\pi}{2}}\frac{1}{\sqrt{1-k^2\sin^2 x}}\,dx\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
                 <span class="mini-badge">Other</span>
+                <span class="mini-badge">Ramanujan’s Master Theorem</span>
                 <span class="mini-badge">U-Sub</span>
               </div>
               <div class="meta-date"><span class="mini-badge">Nov 2025</span></div>
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="polar gammabeta usub dec25" onclick="window.open('My_Integral_Compilation.pdf#page=128', '_blank')">
+          <div class="integral-bar" data-tags="polar series gammabeta usub dec25" onclick="window.open('My_Integral_Compilation.pdf#page=128', '_blank')">
             <div class="integral-title">
               \[\sum_{m=0}^{\infty}\frac{\alpha^m}{m!}\Gamma^2\biggl(\frac{2m+1}{4}\bigg)\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
-                <span class="mini-badge">Polar Form</span>
+                <span class="mini-badge">Polar Coords</span>
+                <span class="mini-badge">Series Expansion</span>
                 <span class="mini-badge">Gamma/Beta</span>
                 <span class="mini-badge">U-Sub</span>
               </div>
@@ -1512,13 +1517,14 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="DUIS realimag parts partialfracs usub may26" onclick="window.open('My_Integral_Compilation.pdf#page=180', '_blank')">
+          <div class="integral-bar" data-tags="DUIS kings realimag parts partialfracs usub may26" onclick="window.open('My_Integral_Compilation.pdf#page=180', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{\pi}i^{\tan x}\,dx\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
                 <span class="mini-badge">DUIS</span>
+                <span class="mini-badge">King's Rule</span>
                 <span class="mini-badge">Real/Imag</span>
                 <span class="mini-badge">IBP</span>
                 <span class="mini-badge">Partial Fractions</span>
@@ -1568,13 +1574,12 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="gammabeta usub parts series jun26" onclick="window.open('My_Integral_Compilation.pdf#page=185', '_blank')">
+          <div class="integral-bar" data-tags="gammabeta usub parts jun26" onclick="window.open('My_Integral_Compilation.pdf#page=185', '_blank')">
             <div class="integral-title">
              \[\int_{0}^{1}\Gamma\biggl(1+\frac{x}{a}\bigg)\Gamma\biggl(1-\frac{x}{a}\bigg)dx\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
-                <span class="mini-badge">Series Expansion</span>
                 <span class="mini-badge">Gamma/Beta</span>
                 <span class="mini-badge">IBP</span>
                 <span class="mini-badge">U-Sub</span>
@@ -1633,7 +1638,7 @@
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
-                <span class="mini-badge">Polar Form</span>
+                <span class="mini-badge">Polar Coords</span>
                 <span class="mini-badge">Gamma/Beta</span>
                 <span class="mini-badge">U-Sub</span>
               </div>
@@ -1868,12 +1873,13 @@
             </div>
           </div>
 
-          <div class="integral-bar" data-tags="gammabeta sep26" onclick="window.open('My_Integral_Compilation.pdf#page=234', '_blank')">
+          <div class="integral-bar" data-tags="gammabeta product sep26" onclick="window.open('My_Integral_Compilation.pdf#page=234', '_blank')">
             <div class="integral-title">
              \[\prod_{n=1}^{\infty}\frac{1}{n^2e^{1/n}}(n+x)(n-x+1)\]
             </div>
             <div class="integral-meta">
               <div class="meta-methods">
+                <span class="mini-badge">Product Expansion</span>
                 <span class="mini-badge">Gamma/Beta</span>
               </div>
               <div class="meta-date"><span class="mini-badge">Sep 2026</span></div>
