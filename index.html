@@ -63,36 +63,6 @@
       padding: 35px 30px;
     }
 
-    .tab-bar {
-      display: flex;
-      gap: 5px;
-    }
-
-    .tab-button {
-      background-color: #EAE0D5;
-      color: var(--text-muted);
-      border: 1px solid var(--border-color);
-      border-bottom: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .tab-button:hover {
-      background-color: #DFD3C3;
-      color: var(--text-main);
-    }
-
-    .tab-button.active {
-      background-color: var(--bg-card);
-      color: var(--text-main);
-      border-color: var(--border-color);
-    }
-
     .paper-page {
       background-color: var(--bg-card);
       color: var(--text-main);
@@ -302,11 +272,6 @@
 <body>
   <div class="website-container">
     
-    <div class="tab-bar">
-      <button class="tab-button active" onclick="openTab(event, 'about')">About Me</button>
-      <button class="tab-button" onclick="openTab(event, 'integral-module')">My Integral Compilation</button>
-    </div>
-
     <div class="paper-page">
       
       <div id="about" class="content-section active">
